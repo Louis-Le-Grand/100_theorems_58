@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage[english]{babel}
-\usepackage{../lib/tex/naproche}
+\usepackage{../../Isabelle2023/contrib/naproche-20230902/lib/tex/naproche}
 \usepackage{amssymb}
 
 \begin{document}
@@ -189,6 +189,10 @@ that classes are built and determined by their
 elements which are mathematical objects.
 
 \begin{forthel}
+
+[prove off]
+[check off]
+
 
 \begin{proposition}
 Let $X$ be a class. Let $x$ be an element of $X$.
@@ -3102,7 +3106,12 @@ Contradiction. qed.
 \end{proof}
 \end{forthel}
 
+\section{Factorial and binomial coeficients}
+
 \begin{forthel}
+
+[prove on]
+[check on]
 \begin{lemma}
 Let $G$ be a sequence of length $n$.
 $\dom(G) = \Seq{1}{n}$.
@@ -3120,14 +3129,6 @@ $0!=1$.
 \begin{axiom}
 $(n+1)!=(n!) \cdot (n+1)$.
 \end{axiom}
-
-\begin{lemma}
-$3!=6$.
-\end{lemma}
-
-\begin{lemma}
-$1 \neq 2$.
-\end{lemma}
 
 \begin{lemma}
 Let $k,n$ be nonzero natural numbers. $k \cdot n \neq 0$. 
@@ -3172,50 +3173,100 @@ Then $\binom{n}{k} > 0$.
 \end{proof}
 
 \begin{lemma}
-$\binom{3}{3}= 1$.
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Then $n-(k-1)$ is a natural number.
 \end{lemma}
 \begin{proof}
-$3! \cdot (3-3)! = 6$.
-$\frac{6}{6} = 1$.
+$k-1$ is a natural number. $k-1 < k < n$. $k-1 \leq n$.
 \end{proof}
-[dump on]
-\begin{lemma}[sandwich lemma]
-Let $n,m$ be natural numbers such that $n \leq m$ and $m \leq n$.
-$n=m$.
+
+\begin{lemma}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+$n-(k-1) = (n-k)+1$.
 \end{lemma}
 
-\begin{signature}
-Let $k$ be a natural number. A Permutation of lenght $k$ is a finite set.
-\end{signature}
-
-\begin{axiom}
-Let $X$ be Permutation of lenght $k$. $|X|=k$.
-\end{axiom}
-
-
-
-
-\begin{lemma}[Anzahl endlicher auswahl mit reihen folge]
-Let $n,k$ be natural numbers such that $k \leq n$.
-Let $F$ be a sequence of length $k$ such that $F(i) = (n+1-i)$ for every $i \in \dom(F)$.
-$\Prod{F}{1}{n} = \frac{n!}{(n-k)!}$.
+\begin{lemma}[reduction of fractions]
+Let $k,l,n$ be natural numbers such that $l,n$ are nonzero.
+Then $\frac{k}{l} = \frac{k\cdot n}{l \cdot n}$. 
 \end{lemma}
 
+\begin{lemma}
+Let $l$,$m$ and $n$ be natural numbers such that $n$ is nonzero.
+Then $\frac{l}{n} + \frac{m}{n} = \frac{l + m}{n}$.
+\end{lemma}
 
+\begin{theorem}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Then $\binom{n}{k} + \binom{n}{k-1} = \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+\end{theorem}
+\begin{proof}
+Let us show that
+$\binom{n}{k} + \binom{n}{k-1} = \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
+$k \leq n$.
+$k-1 < k < n$.
+$k-1 \leq n$.
+$\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
+$\binom{n}{k-1} = \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
+qed.
+\\
 
-%\begin{theorem}
-%Let $n$ be a natural number such that $n > 1$. Let $X$ be a finite set such that $|X| = n$.
-%Let $k$ be a natural number such that $k<n$. 
-%Let $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
-%$|Y| = \binom{n}{k}$.
-%\end{theorem}
-%\begin{proof}
-%$X$ and $\Seq{1}{n}$ are equinumerous.
-%Let $Yprime$ be a finite set such that $Yprime = \{ y | y is finite set such that y \subseteq \Seq{1}{n} and |y| = k \}$.
-%Let us show that For each $x,z$ such that $x \in Yprime$ and $z \in Y$ $z$ and $x$ are equinumerous.
-%Let $x \in Yprime$ and $z \in Y$. $|x| = k$. $|z| = k$. QED.
-%\end{proof}
+Let us show that 
+$\frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!} = 
+\frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}$.
+$n!$, $k! \cdot (n-k)!$ and $(n-k)+1$ are natural numbers.
+$k! \cdot (n-k)!$ and $(n-k)+1$ are nonzero.
+Take a nonzero natural number $l$ such that $l = k! \cdot (n-k)!$.
+Take a nonzero natural number $m$ such that $m = (n-k)+1$.
+Then $\frac{n!}{(k! \cdot (n-k)!)} = \frac{n!}{l} = \frac{n! \cdot m}{l \cdot m} = 
+\frac{n! \cdot ((n-k)+1)}{l \cdot ((n-k)+1) } =  \frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) }$.
+$n-(k-1) = (n-k) +1$.
+$n!$, $(k-1)! \cdot (n-(k-1))!$ and $k$ are natural numbers.
+$(k-1)! \cdot (n-(k-1))!$ and $k$ are nonzero.
+Take a nonzero natural number $o$ such that $o = (k-1)! \cdot (n-(k-1))!$.
+Then $o = (k-1)! \cdot ((n-k)+1)!$.
+[timelimit 10]
+Therefore $\frac{n!}{(k-1)! \cdot (n-(k-1))!} = \frac{n!}{o} = \frac{n! \cdot k}{o \cdot k}
+= \frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}$ (by reduction of fractions).
+[timelimit 3]
+qed.
+\\
 
+Let us show that
+$\frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k} = 
+\frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!}$.
+$(n-k)! \cdot ((n-k)+1) = ((n-k)+1)!$.
+$(k! \cdot (n-k)!) \cdot ((n-k)+1) = k! \cdot ((n-k)+1)!$.
+$(k-1) + 1 = k$.
+$(k-1)! \cdot k = k!$.
+Take natural numbers $l,m$ such that $l = (k-1)!$ and $m = ((n-k)+1)!$.
+$((k-1)! \cdot ((n-k)+1)!) \cdot k = 
+(l \cdot m) \cdot k =
+(l \cdot k) \cdot m =
+((k-1)! \cdot k) \cdot ((n-k)+1)! = k! \cdot ((n-k)+1)!$.
+qed.
+\\
+
+Let us show that 
+$\frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!} = 
+\frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+$n! \cdot ((n-k)+1)$, $n! \cdot k$ and $k! \cdot ((n-k)+1)!$ are natural numbers.
+$k! \cdot ((n-k)+1)!$ is nonzero.
+qed.
+\\
+
+Therefore 
+$\binom{n}{k} + \binom{n}{k-1}
+= \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}
+= \frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}
+= \frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!}
+= \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+\end{proof}
 
 \end{forthel}
 
