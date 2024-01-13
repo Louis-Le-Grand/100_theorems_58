@@ -3157,9 +3157,21 @@ $\binom{n}{k}$ is a natural number.
 Let $k > n$. $\binom{n}{k} = 0$.
 \end{axiom}
 
-\begin{axiom}
+\begin{axiom}[definition binomial coefficient]
 Let $k \leq n$. $\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
 \end{axiom}
+
+\begin{lemma}
+$\binom{0}{0} = 1$.
+\end{lemma}
+\begin{proof}
+$0! = 1$.
+$0$ is a natural number and $0 \leq 0$.
+Take natural numbers $n,k$ such that $n=k=0$ and $k\leq n$.
+$\binom{0}{0} = \binom{n}{k} = \frac{n!}{k! \cdot (n-k)!} = 
+\frac{0!}{0! \cdot (0-0)!} = \frac{1}{1 \cdot 1} = 1$
+(by definition binomial coefficient).
+\end{proof}
 
 \begin{theorem}
 Let $k,n$ be natural numbers such that $1 < k < n$.
