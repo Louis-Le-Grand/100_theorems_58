@@ -3112,6 +3112,7 @@ Contradiction. qed.
 
 [prove on]
 [check on]
+
 \begin{lemma}
 Let $G$ be a sequence of length $n$.
 $\dom(G) = \Seq{1}{n}$.
@@ -3279,6 +3280,68 @@ $\binom{n}{k} + \binom{n}{k-1}
 \frac{n! \cdot k}{k! \cdot ((n-k)+1)!}
 = \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
 \end{proof}
+
+\begin{lemma}
+Let $A, B$ be sets such that $B$ is finite and $A$ and $B$ are equinumerous.
+Then $A$ is finite.
+\end{lemma}
+
+\begin{lemma}
+Let $A$ be a set. Let $a\in A$. Then $\sset{a}{A}$ is finite and $| \sset{a}{A} | = 1$.
+\end{lemma}
+\begin{proof}
+Define $f(x) = 1$ for $x \in \sset{a}{A}$.
+$f$ is a map from $\sset{a}{A}$ to $\Seq{1}{1}$.
+$f$ is a surjection from $\sset{a}{A}$ onto $\Seq{1}{1}$.
+$f$ is injective.
+Thus $f$ is a bijection between $\sset{a}{A}$ and $\Seq{1}{1}$.
+\end{proof}
+
+\begin{lemma}
+For all sets $A$ and all natural numbers $n$ if $A \subseteq \Seq{1}{n}$ then $A$ is finite.
+\end{lemma}
+\begin{proof}[by induction on $n$]
+Let $A$ be a set and $n$ be a natural number such that $A \subseteq \Seq{1}{n}$.
+Case $n=0$. Then $\Seq{1}{0} = \emptyset$. qed.
+Case $n \neq 0$. Take a natural number $m$ such that $m+1=n$. 
+Then $m$ is inductively smaller than $n$. 
+$\Seq{1}{n} = \Seq{1}{m} \cup (\Seq{1}{n} \setminus \Seq{1}{m})$.
+$A = (A \cap \Seq{1}{m}) \cup (A\cap (\Seq{1}{n} \setminus \Seq{1}{m}))$.
+$(A \cap \Seq{1}{m}) \subseteq \Seq{1}{m}$.
+$A \cap \Seq{1}{m}$ is finite.
+Let us show that $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ is finite.
+$\Seq{1}{n} \setminus \Seq{1}{m} = \Seq{1}{m+1} \setminus \Seq{1}{m}$.
+Thus $x \in \Seq{1}{m+1} \setminus \Seq{1}{m}$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.
+Therefore $x = m+1$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.
+Thus $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) \subseteq \sset{m+1}{\Seq{1}{m+1}}$.
+Case $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$. Trivial.
+Case not $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$.
+Then $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \sset{m+1}{\Seq{1}{m+1}}$.
+$\sset{m+1}{\Seq{1}{m+1}}$ is finite.
+qed.
+qed.
+$A \cap \Seq{1}{m}$ and $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ are disjoint.
+Therefore $A$ is finite.
+qed.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be a set and $B$ be a finite set such that $A \subseteq B$.
+$A$ is finite.
+\end{lemma}
+\begin{proof}
+Take a natural number $n$ such that $B$ and $\Seq{1}{n}$ are equinumerous.
+Take a bijection $f$ between $B$ and $\Seq{1}{n}$.
+Then $f[A]$ is a subset of $\Seq{1}{n}$.
+$f[A]$ is finite.
+Define $g(x) = f(x)$ for $x\in A$.
+$g$ is a map from $A$ to $f[A]$.
+$g$ is injective.
+$g$ is a surjection from $A$ onto $f[A]$.
+$g$ is a bijection between $A$ and $f[A]$.
+Thus $A$ and $f[A]$ are equinumerous and $A$ is finite.
+\end{proof}
+
 
 \end{forthel}
 
