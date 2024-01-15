@@ -189,7 +189,8 @@ that classes are built and determined by their
 elements which are mathematical objects.
 
 \begin{forthel}
-
+[prove off]
+[check off]
 \begin{proposition}
 Let $X$ be a class. Let $x$ be an element of $X$.
 Then $x$ is an object.
@@ -3102,7 +3103,11 @@ Contradiction. qed.
 \end{proof}
 \end{forthel}
 
+
+
 \begin{forthel}
+
+
 \begin{lemma}
 Let $G$ be a sequence of length $n$.
 $\dom(G) = \Seq{1}{n}$.
@@ -3120,14 +3125,6 @@ $0!=1$.
 \begin{axiom}
 $(n+1)!=(n!) \cdot (n+1)$.
 \end{axiom}
-
-\begin{lemma}
-$3!=6$.
-\end{lemma}
-
-\begin{lemma}
-$1 \neq 2$.
-\end{lemma}
 
 \begin{lemma}
 Let $k,n$ be nonzero natural numbers. $k \cdot n \neq 0$. 
@@ -3152,13 +3149,27 @@ Let $n, k$ denote natural numbers.
 $\binom{n}{k}$ is a natural number.
 \end{signature}
 
+
 \begin{axiom}
 Let $k > n$. $\binom{n}{k} = 0$.
 \end{axiom}
-
-\begin{axiom}
+    
+\begin{axiom}[definition binomial coefficient]
 Let $k \leq n$. $\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
 \end{axiom}
+
+\begin{lemma}
+$\binom{0}{0} = 1$.
+\end{lemma}
+\begin{proof}
+$0! = 1$.
+$0$ is a natural number and $0 \leq 0$.
+Take natural numbers $n,k$ such that $n=k=0$ and $k\leq n$.
+$\binom{0}{0} = \binom{n}{k} = \frac{n!}{k! \cdot (n-k)!} = 
+\frac{0!}{0! \cdot (0-0)!} = \frac{1}{1 \cdot 1} = 1$
+(by definition binomial coefficient).
+\end{proof}
+
 
 \begin{theorem}
 Let $k,n$ be natural numbers such that $1 < k < n$.
@@ -3172,49 +3183,379 @@ Then $\binom{n}{k} > 0$.
 \end{proof}
 
 \begin{lemma}
-$\binom{3}{3}= 1$.
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Then $n-(k-1)$ is a natural number.
 \end{lemma}
 \begin{proof}
-$3! \cdot (3-3)! = 6$.
-$\frac{6}{6} = 1$.
+$k-1$ is a natural number. $k-1 < k < n$. $k-1 \leq n$.
 \end{proof}
-[dump on]
-\begin{lemma}[sandwich lemma]
-Let $n,m$ be natural numbers such that $n \leq m$ and $m \leq n$.
-$n=m$.
+  
+\begin{lemma}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+$n-(k-1) = (n-k)+1$.
+\end{lemma}
+  
+\begin{lemma}[reduction of fractions]
+Let $k,l,n$ be natural numbers such that $l,n$ are nonzero.
+Then $\frac{k}{l} = \frac{k\cdot n}{l \cdot n}$. 
+\end{lemma}
+  
+\begin{lemma}
+Let $l$,$m$ and $n$ be natural numbers such that $n$ is nonzero.
+Then $\frac{l}{n} + \frac{m}{n} = \frac{l + m}{n}$.
+\end{lemma}
+  
+\begin{theorem}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Then $\binom{n}{k} + \binom{n}{k-1} = \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+\end{theorem}
+\begin{proof}
+Let us show that
+$\binom{n}{k} + \binom{n}{k-1} = \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
+$k \leq n$.
+$k-1 < k < n$.
+$k-1 \leq n$.
+$\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
+$\binom{n}{k-1} = \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
+qed.
+\\
+ 
+Let us show that 
+$\frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!} = 
+\frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}$.
+$n!$, $k! \cdot (n-k)!$ and $(n-k)+1$ are natural numbers.
+$k! \cdot (n-k)!$ and $(n-k)+1$ are nonzero.
+Take a nonzero natural number $l$ such that $l = k! \cdot (n-k)!$.
+Take a nonzero natural number $m$ such that $m = (n-k)+1$.
+Then $\frac{n!}{(k! \cdot (n-k)!)} = \frac{n!}{l} = \frac{n! \cdot m}{l \cdot m} = 
+\frac{n! \cdot ((n-k)+1)}{l \cdot ((n-k)+1) } =  \frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) }$.
+$n-(k-1) = (n-k) +1$.
+$n!$, $(k-1)! \cdot (n-(k-1))!$ and $k$ are natural numbers.
+$(k-1)! \cdot (n-(k-1))!$ and $k$ are nonzero.
+Take a nonzero natural number $o$ such that $o = (k-1)! \cdot (n-(k-1))!$.
+Then $o = (k-1)! \cdot ((n-k)+1)!$.
+[timelimit 10]
+Therefore $\frac{n!}{(k-1)! \cdot (n-(k-1))!} = \frac{n!}{o} = \frac{n! \cdot k}{o \cdot k}
+= \frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}$ (by reduction of fractions).
+[timelimit 3]
+qed.
+\\
+  
+Let us show that
+$\frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k} = 
+\frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!}$.
+$(n-k)! \cdot ((n-k)+1) = ((n-k)+1)!$.
+$(k! \cdot (n-k)!) \cdot ((n-k)+1) = k! \cdot ((n-k)+1)!$.
+$(k-1) + 1 = k$.
+$(k-1)! \cdot k = k!$.
+Take natural numbers $l,m$ such that $l = (k-1)!$ and $m = ((n-k)+1)!$.
+$((k-1)! \cdot ((n-k)+1)!) \cdot k = 
+(l \cdot m) \cdot k =
+(l \cdot k) \cdot m =
+((k-1)! \cdot k) \cdot ((n-k)+1)! = k! \cdot ((n-k)+1)!$.
+qed.
+\\
+  
+Let us show that 
+$\frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!} = 
+\frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+$n! \cdot ((n-k)+1)$, $n! \cdot k$ and $k! \cdot ((n-k)+1)!$ are natural numbers.
+$k! \cdot ((n-k)+1)!$ is nonzero.
+qed.
+\\
+  
+Therefore 
+$\binom{n}{k} + \binom{n}{k-1}
+= \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}
+= \frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}
+= \frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!}
+= \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+\end{proof}
+
+
+[check on]
+
+
+
+
+\begin{lemma}
+Let $k$ be an natural number. Not $k < 0$.
 \end{lemma}
 
-\begin{signature}
-Let $k$ be a natural number. A Permutation of lenght $k$ is a finite set.
-\end{signature}
 
-\begin{axiom}
-Let $X$ be Permutation of lenght $k$. $|X|=k$.
+\begin{lemma}[nonempty setdifference]
+For all nonzero natural numbers $n$ and all finite sets $A,B$
+if $A \neq B$ and $A \subseteq B$ and $|B| = n$ 
+then $B \setminus A$ is nonempty.
+\end{lemma}
+\begin{proof}[by Induction on $n$]
+Let $n$ be a nonzero natural number.
+Let $A,B$ be finite sets such that
+$A \neq B$ and $A \subseteq B$ and $|B| = n$.
+Case $n=1$.
+Trivial.
+Case $n > 1$.
+Let $m$ be natural number such that $m = n-1$.
+$m$ is inductively smaller than $n$.
+QED.
+\end{proof}
+
+\begin{lemma}
+Let $A, B$ be sets.
+Let $f$ be a map from $A$ to $B$.
+$f$ is a bijection between $A$ and $B$ iff $f$ is a injective surjection from $A$ onto $B$.
+\end{lemma}
+
+\begin{lemma}
+For all natural numbers $n$
+if $x \in \Seq{1}{n}$
+then $\sset{x}{\Seq{1}{n}}$ is finite and $|\sset{x}{\Seq{1}{n}}| = 1$. 
+\end{lemma}
+\begin{proof}[by induction on $n$]
+Let $n$ be a natural number.
+Case $n=0$. Trivial.
+Case $n > 0$. 
+Let $x \in \Seq{1}{n}$.
+Case $x = n$.
+$\sset{n}{\Seq{1}{n}} = \Seq{n}{n}$.
+Define $h(x) = 1$ for $x \in \Seq{n}{n}$. 
+$h$ is a bijection between $\Seq{n}{n}$ and $\Seq{1}{1}$.
+QED.
+Case $x \neq n$.
+$x < n$.
+Let $m$ be natural number such that $m = n-1$.
+$m$ is inductively smaller than $n$.
+Then $x \leq m$.
+Then $x \in \Seq{1}{m}$.
+Then $\sset{x}{\Seq{1}{m}}$ is finite and $|\sset{x}{\Seq{1}{m}}|=1$.
+$\sset{x}{\Seq{1}{m}}=\sset{x}{\Seq{1}{n}}$.
+QED.
+QED.
+\end{proof}
+
+
+
+
+\begin{lemma}
+Let $A, B$ be sets such that $B$ is finite and $A$ and $B$ are equinumerous.
+Then $A$ is finite.
+\end{lemma}
+
+\begin{lemma}
+Let $A$ be a set. Let $a\in A$. Then $\sset{a}{A}$ is finite and $| \sset{a}{A} | = 1$.
+\end{lemma}
+\begin{proof}
+Define $f(x) = 1$ for $x \in \sset{a}{A}$.
+$f$ is a map from $\sset{a}{A}$ to $\Seq{1}{1}$.
+$f$ is a surjection from $\sset{a}{A}$ onto $\Seq{1}{1}$.
+$f$ is injective.
+Thus $f$ is a bijection between $\sset{a}{A}$ and $\Seq{1}{1}$.
+\end{proof}
+
+\begin{lemma}
+For all sets $A$ and all natural numbers $n$ if $A \subseteq \Seq{1}{n}$ then $A$ is finite.
+\end{lemma}
+\begin{proof}[by induction on $n$]
+Let $A$ be a set and $n$ be a natural number such that $A \subseteq \Seq{1}{n}$.
+Case $n=0$. Then $\Seq{1}{0} = \emptyset$. qed.
+Case $n \neq 0$. Take a natural number $m$ such that $m+1=n$. 
+Then $m$ is inductively smaller than $n$. 
+$\Seq{1}{n} = \Seq{1}{m} \cup (\Seq{1}{n} \setminus \Seq{1}{m})$.
+$A = (A \cap \Seq{1}{m}) \cup (A\cap (\Seq{1}{n} \setminus \Seq{1}{m}))$.
+$(A \cap \Seq{1}{m}) \subseteq \Seq{1}{m}$.
+$A \cap \Seq{1}{m}$ is finite.
+Let us show that $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ is finite.
+$\Seq{1}{n} \setminus \Seq{1}{m} = \Seq{1}{m+1} \setminus \Seq{1}{m}$.
+Thus $x \in \Seq{1}{m+1} \setminus \Seq{1}{m}$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.
+Therefore $x = m+1$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.
+Thus $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) \subseteq \sset{m+1}{\Seq{1}{m+1}}$.
+Case $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$. Trivial.
+Case not $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$.
+Then $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \sset{m+1}{\Seq{1}{m+1}}$.
+$\sset{m+1}{\Seq{1}{m+1}}$ is finite.
+qed.
+qed.
+$A \cap \Seq{1}{m}$ and $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ are disjoint.
+Therefore $A$ is finite.
+qed.
+\end{proof}
+
+\begin{lemma}
+Let $A$ be a set and $B$ be a finite set such that $A \subseteq B$.
+$A$ is finite.
+\end{lemma}
+\begin{proof}
+Take a natural number $n$ such that $B$ and $\Seq{1}{n}$ are equinumerous.
+Take a bijection $f$ between $B$ and $\Seq{1}{n}$.
+Then $f[A]$ is a subset of $\Seq{1}{n}$.
+$f[A]$ is finite.
+Define $g(x) = f(x)$ for $x\in A$.
+$g$ is a map from $A$ to $f[A]$.
+$g$ is injective.
+$g$ is a surjection from $A$ onto $f[A]$.
+$g$ is a bijection between $A$ and $f[A]$.
+Thus $A$ and $f[A]$ are equinumerous and $A$ is finite.
+\end{proof}
+
+\begin{axiom}[lemma 11]%TODO
+For all nonzero natural numbers $n$ and all finite sets $A, B$
+if $B \subseteq A$ and $|A| = n$ and $A \neq B$
+then $|B| < |A|$.
 \end{axiom}
 
 
 
+\begin{theorem}
+  For all natural numbers $n,k$ and all finite sets $X,Y$
+  if $|X| = n$ and $k \leq n$ and $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$
+  then $|Y| = \binom{n}{k}$.
+  \end{theorem}
+\begin{proof}[by induction]
 
-\begin{lemma}[Anzahl endlicher auswahl mit reihen folge]
-Let $n,k$ be natural numbers such that $k \leq n$.
-Let $F$ be a sequence of length $k$ such that $F(i) = (n+1-i)$ for every $i \in \dom(F)$.
-$\Prod{F}{1}{n} = \frac{n!}{(n-k)!}$.
-\end{lemma}
+Let $n,k$ be a natural numbers such that $k \leq n$.
+Let $X$ be a finite set. Assume $|X| = n$.
+Let $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
+
+
+Case $n=0$.
+$k \leq n$.
+$k \leq 0$.
+$k = 0$.
+$\binom{0}{0} = 1$.
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. Thus $\emptyset \in Y$.
+Define $h(x) = 1$ for $x \in Y$. 
+[timelimit 10]
+$h$ is a bijection between $Y$ and $\Seq{1}{1}$.
+[timelimit 3]
+Hence $|Y| = 1$ and $\binom{n}{k} = 1$. End.
+
+
+Case $n \neq 0$.
+Take a natural number $m$ such that $m+1 = n$.
+$m$ is inductively smaller than $n$.
+There exists a bijection between $X$ and $\Seq{1}{n}$ and $1 \in \Seq{1}{n}$.
+Thus $X$ is nonempty.
+Take a bijection $g$ between $X$ and $\Seq{1}{n}$.
+Take $\xi \in X$ such that $g(\xi)=n$.
+
+Define $M = \{x | x \in Y and \xi \in x\}$.
+Define $N = \{x | x \in Y and \xi \notin x\}$.
+$M \cup N = Y$.
+$M, N$ are disjoint.
+
+Take $U = X \setminus \sset{\xi}{X}$. $U \subseteq X$.
+Let us show that $U$ is finite and $|U| = m$.
+Take $f = g \upharpoonright U$.
+$g$ is injective. Thus $f$ is injective.
+
+Let us show that $f[U] \subseteq \Seq{1}{m}$.
+$f[U] \subseteq \Seq{1}{n}$ and $f(\gamma) = n$ for no $\gamma \in U$.
+Thus $f[U] \subseteq \Seq{1}{m}$. End.
+
+[timelimit 10] 
+$f$ is a surjection from $U$ onto $\Seq{1}{m}$.
+Indeed we can show that every element of $\Seq{1}{m}$ is a value of $f$.
+Let $y \in \Seq{1}{m}$. 
+$\Seq{1}{m} \subseteq \Seq{1}{n}$. 
+$g$ is a surjection from $X$ onto $\Seq{1}{n}$.
+Take $x \in X$ such that $g(x) = y$. 
+$y \neq n$ and $x \neq \xi$. 
+$x \in U$ and $f(x) = g(x) = y$. End.
+QED.
+[timelimit 3]
+
+$M \subseteq Y$.                     
+Therefore $M$ is finite. 
+$N \subseteq Y$.
+Therefore $N$ is finite.
+
+$M = \{x | x \subseteq X and \xi \in x and |x|=k\}$.
+
+
+Case $k=0$.
+[prove off]
+$\binom{n}{0}=1$.%TODO
+
+$\binom{n}{k} = \binom{n}{0} = 1$.
+For all $x \in Y$ $|x| = 0$.
+Therefore $x = \emptyset$ for all $x \in Y$.
+$Y = \{x | x \subseteq X and x = \emptyset \}$.
+$\emptyset \subseteq X$. Thus $\emptyset \in Y$.
+Define $h(x) = 1$ for $x \in Y$. 
+$h$ is a bijection between $Y$ and $\Seq{1}{1}$.
+Hence $|Y| = 1$ and $\binom{n}{k} = 1$.
+QED.
+[prove on]
+
+Case $k=n$.
+Define $h(x) = 1$ for $x \in Y$. 
+$h$ is surjection from $Y$ onto $\Seq{1}{1}$.
+$h$ is injective. %Dies funktioniert nur wegen Lemma 11 warum das dann auch immer instant geht
+$|Y| = 1$.
+[prove off]
+$\binom{n}{n}=1$. %TODO
+[prove on]
+QED.
+
+Case $k > 0$ and $k < n$.
+%Proof by Induction.
+
+Take a natural number $k'$ such that $k'+1 = k$.
+$k'$ is inductively smaller than $k$.
+%$N' = \{x | x is finite set and x \subseteq U and |x| = k' \}$.
+
+%$N'$ is finite.
+%Then $|N'|=\binom{m}{k'}$ (by Induction).
+[prove off]
+$\binom{n}{k} = \binom{(n-1)}{(k-1)} + \binom{(n-1)}{k}$.
+Let us show that $|M| = \binom{n-1}{k-1}$.
+
+QED.
+[prove on]
+%Let us show that $|N| = \binom{n-1}{k}$.
+$y \in N$ for all $y \in Y$ such that $\xi \notin y$.
+$y$ is finite set for all $y \in Y$ such that $\xi \notin y$.
+$|y| = k$ for all $y \in Y$ such that $\xi \notin y$.
+$|U| = m$.
+$N = \{x | x is finite set and x \subseteq U and |x| = k \}$.
+$N$ is finite set.
+$k \leq m$.
+%Hence $m$ is a natural number
+%and $k$ is a natural number
+%and $k \leq m$
+%and $|U| = m$ 
+%and $N$ is a finite set
+%and $N = \{x | x is finite set and x \subseteq U and |x| = k \}$.
+$n-1$ is inductively smaller than $n$.
+[prove off]
+$|N| = \binom{n-1}{k}$.
+[prove on]
+
+Then $|Y| = |N| + |M|$.
+Therefore $|Y| = \binom{n-1}{k} + \binom{n-1}{k-1} = \binom{n}{k}$.     
+%QED.
+
+
+QED.
 
 
 
-%\begin{theorem}
-%Let $n$ be a natural number such that $n > 1$. Let $X$ be a finite set such that $|X| = n$.
-%Let $k$ be a natural number such that $k<n$. 
-%Let $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
-%$|Y| = \binom{n}{k}$.
-%\end{theorem}
-%\begin{proof}
-%$X$ and $\Seq{1}{n}$ are equinumerous.
-%Let $Yprime$ be a finite set such that $Yprime = \{ y | y is finite set such that y \subseteq \Seq{1}{n} and |y| = k \}$.
-%Let us show that For each $x,z$ such that $x \in Yprime$ and $z \in Y$ $z$ and $x$ are equinumerous.
-%Let $x \in Yprime$ and $z \in Y$. $|x| = k$. $|z| = k$. QED.
-%\end{proof}
+
+
+
+
+
+
+QED.
+\end{proof}
 
 
 \end{forthel}
@@ -3224,7 +3565,7 @@ $\Prod{F}{1}{n} = \frac{n!}{(n-k)!}$.
 \bibitem{Isabelle} The Isabelle Proof Assistant. \url{https://isabelle.in.tum.de/}
 
 \bibitem{Knaster}
-B. Knaster. Un théorème sur les fonctions d'ensembles. With A. Tarski. 
+5B. Knaster. Un théorème sur les fonctions d'ensembles. With A. Tarski. 
 \textit{Ann. Soc. Polon. Math.} 6: 133–134, 1928.
 
 \bibitem{Naproche} The Naproche Natural Proof Checker. \url{https://naproche.github.io/}
