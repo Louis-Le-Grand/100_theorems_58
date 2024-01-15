@@ -3476,11 +3476,23 @@ $g$ is a bijection between $A$ and $f[A]$.
 Thus $A$ and $f[A]$ are equinumerous and $A$ is finite.
 \end{proof}
 
-\begin{axiom}[lemma 11]%TODO
+\begin{lemma}[lemma 11]
 For all nonzero natural numbers $n$ and all finite sets $A, B$
 if $B \subseteq A$ and $|A| = n$ and $A \neq B$
 then $|B| < |A|$.
-\end{axiom}
+\end{lemma}
+\begin{proof}
+Let $n$ be nonzero natural number.
+Let $A,B$ be finite sets such that 
+$B \subseteq A$ and $|A|=n$ and $A \neq B$.
+If $A \neq B$ and $B \subseteq A$ then
+$A \setminus B$ is nonempty.
+$A \setminus B \subseteq A$.
+$A \setminus B$ is finite.
+$A \setminus B$ and $B$ are disjoint.
+$A = (A \setminus B) \cup B$.
+Then $|A| = |(A \setminus B)| + |B|$.
+\end{proof}
 
 [prove off]
 
