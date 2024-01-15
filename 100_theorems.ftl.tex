@@ -3206,15 +3206,20 @@ Then $\frac{l}{n} + \frac{m}{n} = \frac{l + m}{n}$.
 \end{lemma}
   
 \begin{theorem}
-Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Let $n,k$ be nonzero natural numbers such that $1 < k \leq n$.
 Then $\binom{n}{k} + \binom{n}{k-1} = \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
 \end{theorem}
 \begin{proof}
 Let us show that
 $\binom{n}{k} + \binom{n}{k-1} = \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
 $k \leq n$.
-$k-1 < k < n$.
+%$k-1 < k < n$.
+$k-1 \leq k \leq n$.
 $k-1 \leq n$.
+Indeed we can show that $k-1 \leq n$.
+Case $k = n$.Trivial.
+Case $k < n$.Trivial.
+QED.
 $\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
 $\binom{n}{k-1} = \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
 qed.
@@ -3279,9 +3284,77 @@ $\binom{n}{k} + \binom{n}{k-1}
 \end{proof}
 
 
+
+\begin{theorem}[Binomial Sum]
+Let $n,k$ be nonzero natural numbers such that $1 < k \leq n$.
+Then $\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}$.
+\end{theorem}
+\begin{proof}
+$\binom{n}{k} + \binom{n}{k-1} = \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+$k! \cdot ((n+1)-k)! \neq 0$.
+
+$(n! \cdot ((n-k)+1)) + (n! \cdot k) =(n+1)!$.
+$\binom{n}{k} + \binom{n}{k-1} 
+= \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+$ \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}
+= \frac{(n+1)!}{k! \cdot ((n-k)+1)!}$.
+$((n-k)+1)=(n+1)+(-k)$.
+$ \frac{(n+1)!}{k! \cdot ((n-k)+1)!}
+= \frac{(n+1)!}{k! \cdot ((n+1)+(-k))!}$.
+
+$k \leq (n+1)$.
+[timelimit 11]
+$\binom{n+1}{k} = \frac{(n+1)!}{k! \cdot ((n+1)+(-k))!}$.
+[timelimit 3]
+$ \frac{(n+1)!}{k! \cdot ((n+1)+(-k))!}
+= \binom{n+1}{k}$.
+\end{proof}
+
+\begin{lemma}
+$\binom{n}{n} = 1$ for all nonzero natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be a nonzero natural number.
+$n \leq n.$
+$n! \cdot (n-n)! \neq 0$.
+$\binom{n}{n} = \frac{n!}{n! \cdot (n-n)!}$.
+$n! \cdot (n-n)! = n!$.
+$\frac{n!}{n! \cdot (n-n)!} = \frac{n!}{n!} = 1$.
+\end{proof}
+[prove off]
 [check on]
 
+\begin{lemma}
+Let $n,k$ be nonzero natural numbers such that $1 < k \leq n$.
+Then $\binom{n-1}{k} + \binom{n-1}{k-1} = \binom{n}{k}$.
+\end{lemma}
+\begin{proof}
+Case $k = n$.
+Then $1 < k \leq n$.
+Therefore $\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}$.
+QED.
+Case $k = 1$. Trivial.
+Case $1 < k < n$.
+Let $m,l$ be nonzero natural numbers 
+such that $1 < l \leq m$ and $m+1 =n$ and $l = k$.
+Then $\binom{m}{l} + \binom{m}{l-1} = \binom{m+1}{l}$.
+QED.
+\end{proof}
 
+\begin{lemma}
+$\binom{n}{0}=1$ for all natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be a natural number.
+$\binom{n}{0} 
+= \frac{n!}{0! \cdot (n-0)!} 
+= \frac{1 \cdot n!}{1 \cdot n!} 
+= 1$.
+\end{proof}
+
+
+
+[prove off]
 
 
 \begin{lemma}
@@ -3409,7 +3482,7 @@ if $B \subseteq A$ and $|A| = n$ and $A \neq B$
 then $|B| < |A|$.
 \end{axiom}
 
-
+[prove off]
 
 \begin{theorem}
   For all natural numbers $n,k$ and all finite sets $X,Y$
@@ -3479,10 +3552,10 @@ Therefore $N$ is finite.
 
 $M = \{x | x \subseteq X and \xi \in x and |x|=k\}$.
 
-
+[prove on]
 Case $k=0$.
-[prove off]
-$\binom{n}{0}=1$.%TODO
+
+$\binom{n}{0}=1$.
 
 $\binom{n}{k} = \binom{n}{0} = 1$.
 For all $x \in Y$ $|x| = 0$.
@@ -3490,19 +3563,20 @@ Therefore $x = \emptyset$ for all $x \in Y$.
 $Y = \{x | x \subseteq X and x = \emptyset \}$.
 $\emptyset \subseteq X$. Thus $\emptyset \in Y$.
 Define $h(x) = 1$ for $x \in Y$. 
+[timelimit 10]
 $h$ is a bijection between $Y$ and $\Seq{1}{1}$.
+[timelimit 3]
 Hence $|Y| = 1$ and $\binom{n}{k} = 1$.
 QED.
-[prove on]
+
 
 Case $k=n$.
 Define $h(x) = 1$ for $x \in Y$. 
 $h$ is surjection from $Y$ onto $\Seq{1}{1}$.
 $h$ is injective. %Dies funktioniert nur wegen Lemma 11 warum das dann auch immer instant geht
 $|Y| = 1$.
-[prove off]
-$\binom{n}{n}=1$. %TODO
-[prove on]
+$\binom{n}{n}=1$.
+
 QED.
 
 Case $k > 0$ and $k < n$.
