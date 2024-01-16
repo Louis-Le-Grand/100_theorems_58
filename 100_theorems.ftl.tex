@@ -3322,7 +3322,7 @@ $n! \cdot (n-n)! = n!$.
 $\frac{n!}{n! \cdot (n-n)!} = \frac{n!}{n!} = 1$.
 \end{proof}
 [prove off]
-[check on]
+[check off]
 
 \begin{lemma}
 Let $n,k$ be nonzero natural numbers such that $1 < k \leq n$.
@@ -3476,6 +3476,8 @@ $g$ is a bijection between $A$ and $f[A]$.
 Thus $A$ and $f[A]$ are equinumerous and $A$ is finite.
 \end{proof}
 
+
+
 \begin{lemma}[lemma 11]
 For all nonzero natural numbers $n$ and all finite sets $A, B$
 if $B \subseteq A$ and $|A| = n$ and $A \neq B$
@@ -3484,17 +3486,34 @@ then $|B| < |A|$.
 \begin{proof}
 Let $n$ be nonzero natural number.
 Let $A,B$ be finite sets such that 
-$B \subseteq A$ and $|A|=n$ and $A \neq B$.
+$B \subseteq A$ and $|A|=n$ and $A \neq B$.\\
+
 If $A \neq B$ and $B \subseteq A$ then
-$A \setminus B$ is nonempty.
-$A \setminus B \subseteq A$.
-$A \setminus B$ is finite.
-$A \setminus B$ and $B$ are disjoint.
-$A = (A \setminus B) \cup B$.
-Then $|A| = |(A \setminus B)| + |B|$.
+$A \setminus B$ is nonempty.\\
+$A \setminus B \subseteq A$.\\
+$A \setminus B$ is finite.\\
+$A \setminus B$ and $B$ are disjoint.\\
+$A = (A \setminus B) \cup B$.\\
+Then $|A| = |(A \setminus B)| + |B|$.\\
 \end{proof}
 
-[prove off]
+\begin{lemma}
+$\binom{n}{1}=n$ for all nonzero natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be a nonzero natural number.
+$1! \cdot (n-1)! \neq 0$.
+$1 \leq n$.
+$\binom{n}{1} = \frac{n!}{1! \cdot (n-1)!}$.
+$(n-1)! \neq 0$.
+$((n-1)+1)! = (n-1)! \cdot ((n-1)+1)$.
+$(n-1)+1 = n$.
+$\frac{n!}{1! \cdot (n-1)!} 
+= \frac{n \cdot (n-1)!}{1 \cdot (n-1)!}$.
+$\frac{n \cdot (n-1)!}{1 \cdot (n-1)!}
+= \frac{n}{1}$.
+\end{proof}
+
 
 \begin{theorem}
   For all natural numbers $n,k$ and all finite sets $X,Y$
@@ -3562,9 +3581,6 @@ Therefore $M$ is finite.
 $N \subseteq Y$.
 Therefore $N$ is finite.
 
-$M = \{x | x \subseteq X and \xi \in x and |x|=k\}$.
-
-[prove on]
 Case $k=0$.
 
 $\binom{n}{0}=1$.
@@ -3590,22 +3606,81 @@ $|Y| = 1$.
 $\binom{n}{n}=1$.
 
 QED.
+[prove on]
+Case $k=1$.
+$\binom{n}{k}= \binom{n}{1}$.
+$1 \leq n$.
+$\binom{n}{1}=n$.
+Then $Y = \{x | x is finite set and x \subseteq X and |x|=1 \}$.
+Take a bijection $f$ between $X$ and $\Seq{1}{n}$.
+Let us show that $\sset{x}{X} \in Y$ for every $x \in X$.
+$|\sset{x}{X}|=1$ for all $x \in X$.
+$\sset{x}{X} \subseteq X$ for all $x \in X$.
+QED.
+Define $Y' = \{\sset{x}{X}| x \in X \}$.
+$Y' \subseteq Y$.
+Define $jd(x)=x$ for $x \in Y'$.
 
-Case $k > 0$ and $k < n$.
+$jd$ is a surjection from $Y'$ onto $Y$.
+Indeed we can show that every element of $Y$ is a value of $jd$.
+Take $d \in Y$.
+$d$ is a finite set.
+$|d|=1$.
+Take $d' \in d$.
+$\sset{d'}{d} \subseteq d$.
+$d \setminus \sset{d'}{d}$ is finite.
+$|d \setminus \sset{d'}{d}| < |d| = 1$.
+Therefore $|d \setminus \sset{d'}{d}|=0$.
+Then $d \setminus \sset{d'}{d} = \emptyset$.
+$d = \sset{d'}{d}$.
+$d' \in X$.
+$\sset{d'}{X} = \sset{d'}{d}$.
+Then $jd(\sset{d'}{X})
+=jd(\sset{d'}{d})
+=jd(d)$.
+$jd(\sset{d'}{X})=\sset{d'}{X} = d$. 
+Therefore $jd(x)=x$ for all $x \in Y$.
+Therefore $x \in \range(jd)$ for all $x \in Y$.
+If $d \in Y$ then $d = \sset{d'}{X}$ and $d \subseteq X$.
+
+%Then $x = jd(x) \in jd[Y']$ for all $x \in Y$.
+%$Y \subseteq jd[Y']$.
+%not $id(x)=d$ for all $x \in Y'$.
+%Contradiction.
+
+QED.
+$Y \subseteq Y'$.
+$|Y|=n$.
+
+QED.
+[prove off]
+
+Case $k > 1$ and $k < n$.
 %Proof by Induction.
-
+[prove off]
 Take a natural number $k'$ such that $k'+1 = k$.
 $k'$ is inductively smaller than $k$.
+Take a natural number $n'$ such that $n'+ 1 = n$.
+$n'$ is inductively smaller than $n$.
+[prove off]
+$m$ is inductively smaller than $n$.
+$k-1$ is inductively smaller than $k$.
+$M = \{x | x \subseteq X and \xi \in x and |x|=k\}$.
+Let $M'$ be a finite set such that $M' = \{x | x \subseteq U and |x|=k-1 \}$.
+Then $|M'|=\binom{m}{k-1}$.
+
+[prove off]
+
 %$N' = \{x | x is finite set and x \subseteq U and |x| = k' \}$.
 
 %$N'$ is finite.
 %Then $|N'|=\binom{m}{k'}$ (by Induction).
-[prove off]
+%$1 < k \leq n$.
 $\binom{n}{k} = \binom{(n-1)}{(k-1)} + \binom{(n-1)}{k}$.
-Let us show that $|M| = \binom{n-1}{k-1}$.
+$|M| = \binom{n'}{k'}$.
 
-QED.
-[prove on]
+
+[prove off]
 %Let us show that $|N| = \binom{n-1}{k}$.
 $y \in N$ for all $y \in Y$ such that $\xi \notin y$.
 $y$ is finite set for all $y \in Y$ such that $\xi \notin y$.
@@ -3623,7 +3698,7 @@ $k \leq m$.
 $n-1$ is inductively smaller than $n$.
 [prove off]
 $|N| = \binom{n-1}{k}$.
-[prove on]
+[prove off]
 
 Then $|Y| = |N| + |M|$.
 Therefore $|Y| = \binom{n-1}{k} + \binom{n-1}{k-1} = \binom{n}{k}$.     
