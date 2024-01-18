@@ -3882,29 +3882,32 @@ $P_{\Seq{1}{n},n,k}$ is nonempty.
 Take a bijection $f$ between $\Seq{1}{n}$ and $X$.
 $f[\Seq{1}{k}] \subseteq X$.
 
+
+(10001)(If $b = g[a]$ then $g$ is a surjection from $a$ onto $b$) for all sets $a,b$ and all maps $g$ from $a$ to $b$.
+
 Define $F(x)=f[x]$ for $x \in P_{\Seq{1}{n},n,k}$.
 $f \upharpoonright x$ is injective for all $x \in P_{\Seq{1}{n},n,k}$.
-Let us show that $f \upharpoonright x$ is a surjection from $x$ onto $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
-
+Let us show that $f \upharpoonright x$ is a surjection from $x$ onto $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$(by 10001).
 Let $x \in P_{\Seq{1}{n},n,k}$.
-Let us show that there exist $y \in x$ such that $x' = f(y)$ for all $x' \in f[x]$.
-Let $x' \in f[x]$.
-$|x|=k$.
-$x$ is nonempty.
-$f(x'') \in f[x]$ for all $x'' \in x$.
-$f[x]$ is nonempty.
+Let $g=(f \upharpoonright x)$.
 
-If $x' \in f[x]$ then there exist $y \in x$ such that $x' = f(y)$.
-Take $y \in x$ such that $x' = f(y)$.
-$\dom(f \upharpoonright x)= \dom(f) \cap x$.
-$\dom(f) = \Seq{1}{n}$.
+Let us show that $f[x] = g[x]$.
+
+$g[x] \subseteq f[x]$.
+QED.
+
+$f[x] = g[x]$.
+$\dom(f \upharpoonright x) = \dom(f) \cap x$.
 $x \subseteq \Seq{1}{n}$.
-$x \cap \Seq{1}{n} = x$.
-$y \in \dom(f)$.
-$((f \upharpoonright x)(y)) = f(y)$.
-$((f \upharpoonright x)(y)) = x'$.
+$x \subseteq \dom(f)$.
+$\dom(f) \cap x = x$.
+
+$\dom(f \upharpoonright x) = x$.
+$\dom(f \upharpoonright x) = \dom(g)$.
+$g$ is a surjection from $x$ onto $g[x]$(by 10001).
 QED.
-QED.
+
+
 $f \upharpoonright x$ is a bijection between $x$ and $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
 $F(x)$ is finite for all  $x \in P_{\Seq{1}{n},n,k}$.
 $|F(x)| = k$ for all  $x \in P_{\Seq{1}{n},n,k}$.
