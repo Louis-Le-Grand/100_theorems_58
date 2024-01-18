@@ -3573,6 +3573,80 @@ $\sset{\Seq{1}{n}}{P_{n,n}}$ and $\emptyset$ are disjoint.
 $|\sset{\Seq{1}{n}}{P_{n,n}}|=1$.
 \end{proof}
 
+\begin{lemma}[Hilfslemma]
+Let $n,k$ be natural numbers such that $0 < k \leq n$.
+Let $P' = \{p| p \in P_{n,k} and n \in p\}$.
+Then $|P'| = |P_{n-1,k-1}|$. 
+\end{lemma}
+\begin{proof}
+Take a natural number $m$ such that $m = n-1$.
+$p \subseteq \Seq{1}{m}$ for every $p \in P_{m,k-1}$.
+$p \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$p \cup \sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$p \cup \sset{n}{\Seq{1}{n}}$ is a set for every $p \in P_{m,k-1}$.
+Define $f(p) = p \cup \sset{n}{\Seq{1}{n}}$ for $p \in P_{m,k-1}$.
+$p$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $p \in P_{m,k-1}$.
+$|p| = k-1$ for every $p \in P_{m,k-1}$.
+$|\sset{n}{\Seq{1}{n}}| = 1$.
+$|f(p)| = |p \cup \sset{n}{\Seq{1}{n}}| = |p| + |\sset{n}{\Seq{1}{n}}| = (k-1)+1  = k$ for every $p \in P_{m,k-1}$.
+$p \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$.
+$p \cup \sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$f(p) \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$P_{n,k} = \{ x | x \subseteq \Seq{1}{n} and |x|=k \}$.
+($|f(p)| = k$ and $f(p) \subseteq \Seq{1}{n}$) for every $p \in P_{m,k-1}$.
+$f(p) \in P_{n,k}$ for every $p \in P_{m,k-1}$.
+$n \in f(p)$ for every $p \in P_{m,k-1}$.
+$f(p) \in P'$ for every $p \in P_{m,k-1}$.
+$f$ is a map from $P_{m,k-1}$ to $P'$.
+Let us show that $f$ is injective. 
+   Let $p,q \in P_{m,k-1}$.
+   Assume $f(p) = f(q)$.
+   We have $f(r) \setminus \sset{n}{\Seq{1}{n}} = (r \cup \sset{n}{\Seq{1}{n}}) \setminus \sset{n}{\Seq{1}{n}} = r$
+   for every $r \in  P_{m,k-1}$.
+   $p = f(p)\setminus \sset{n}{\Seq{1}{n}} = f(q)\setminus \sset{n}{\Seq{1}{n}} = q$.
+   Thus $p=q$.
+   QED.
+Let us show that $f$ is a surjection from $P_{m,k-1}$ onto $P'$.
+   Define $p(q) = q \setminus \sset{n}{\Seq{1}{n}}$ for $q \in P'$.
+   $p(q)$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $q \in P'$.
+   $q \subseteq \Seq{1}{n}$ for every $q \in P'$.
+   $q$ is finite for every $q \in P'$.
+   $\sset{n}{\Seq{1}{n}}$ is finite.
+   $p(q) \subseteq q$ for every $q \in P'$.
+   Thus $p(q) is finite$ for every $q \in P'$.
+   $p(q) \cup \sset{n}{\Seq{1}{n}} = q$ for every $q \in P'$.
+   $p(q)$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $q\in P'$.
+   $|q| = |p(q) \cup \sset{n}{\Seq{1}{n}}|  =  |p(q)| + |\sset{n}{\Seq{1}{n}}|$ for every $q \in P'$.
+   Therefore $k = |q| = |p(q)| + |\sset{n}{\Seq{1}{n}}| = |p(q)| + 1$ for every $q \in P'$.
+   $k =  |p(q)| + 1$ for every $q \in P'$.
+   Thus $|p(q)| = (|p(q)| + 1) -1 =  k-1$ for every $q \in P'$.
+   $\Seq{n}{n} = \sset{n}{\Seq{1}{n}}$.
+   $\Seq{1}{n-1} = \Seq{1}{m}$.
+   $\Seq{1}{n} = \Seq{1}{n-1} \cup \Seq{n}{n} = \Seq{1}{m} \cup  \sset{n}{\Seq{1}{n}}$.
+   $\Seq{1}{m} = \Seq{1}{n} \setminus \sset{n}{\Seq{1}{n}}$.
+   $p(q) \subseteq \Seq{1}{m}$ for every $q \in P'$.
+   ($p(q) \subseteq \Seq{1}{m}$ and $|p(q)| = k-1$) for every $q \in P'$.
+   $P_{m,k-1} = \{x | x \subseteq  \Seq{1}{m}$ and $|x| = k-1 \}$.
+   [timelimit 10]
+   $p(q) \in P_{m,k-1}$ for every $q \in P'$.
+   [timelimit 3]
+   $f(p(q)) = p(q) \cup  \sset{n}{\Seq{1}{n}} = q$ for every $q \in P'$.
+   Thus $q \in f[P_{m,k-1}]$ for every $q \in P'$.
+   QED.
+Therefore $f$ is a bijection between $P_{m,k-1}$ and $P'$.
+Thus $P_{m,k-1}$ and $P'$ are equinumerous.
+Let us show that $P_{m,k-1}$ is finite.
+  $P_{m,k-1} \subseteq \pow(\Seq{1}{m})$.
+  $\pow(\Seq{1}{m})$ is finite.
+  QED.
+$P_{m,k-1}$ and $P'$ are finite.
+(If $S,T$ are finite and equinumerous then $|S|= |T|$) for all sets $S,T$.
+Therefore $|P_{n-1,k-1}| = |P_{m,k-1}| = |P'|$.
+$|P'| = |P_{n-1,k-1}|$.
+\end{proof}
+
 \begin{theorem}
 $|P_{n,k}|= \binom{n}{k}$ for all natural numbers $n,k$.
 \end{theorem}
@@ -3642,37 +3716,73 @@ $P'$ is finite.
 $|P_{n,k}|=|P'|+|P_{m,k}|$.
 
 Let us show that $|P'|=|P_{m,k-1}|$.
-$k-1 \leq m$.
-$\Seq{1}{k-1} \subseteq \Seq{1}{m}$.
-$|\Seq{1}{k-1}|=k-1$.
-$\Seq{1}{k-1} \in P_{m,k-1}$.
-$n \notin \Seq{1}{k-1}$.
-$(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}}) \subseteq \Seq{1}{n}$.
-$\Seq{1}{k-1} \subseteq \Seq{1}{n}$.
+(110)$P' = \{p| p \in P_{n,k} and n \in p\}$.
+(111)$0 < k \leq n$.
+$p \subseteq \Seq{1}{m}$ for every $p \in P_{m,k-1}$.
+$p \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$p \cup \sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$p \cup \sset{n}{\Seq{1}{n}}$ is a set for every $p \in P_{m,k-1}$.
+Define $f(p) = p \cup \sset{n}{\Seq{1}{n}}$ for $p \in P_{m,k-1}$.
+$p$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $p \in P_{m,k-1}$.
+$|p| = k-1$ for every $p \in P_{m,k-1}$.
 $|\sset{n}{\Seq{1}{n}}| = 1$.
-$|\Seq{1}{k-1}|=k-1$.
-
-$k = (k-1) + 1$.
-$\Seq{1}{k-1}$ is finite.
-$\sset{n}{\Seq{1}{n}}$ is finite.
-$\sset{n}{\Seq{1}{n}}$ and $\Seq{1}{k-1}$ are disjoint.
-$(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}})$ is finite.
-[timelimit 10]
-$|(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}})| = |(\Seq{1}{k-1})| + |(\sset{n}{\Seq{1}{n}})|$(by disjoint finite sets).
-[timelimit 3]
-$|(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}})| = k$.
-$P'$ is nonempty.
-Take $y \in P'$.
-
-Assume $p \in P_{m,k-1}$.
-$p \subseteq \Seq{1}{m}$.
-Let $pn = p \cup \sset{n}{\Seq{1}{n}}$.
-[prove off]
-$|pn| = k$.
-[prove on]
-$pn \subseteq \Seq{1}{n}$.
-$pn \in P_{n,k}$.
-$pn \in P'$.
+$|f(p)| = |p \cup \sset{n}{\Seq{1}{n}}| = |p| + |\sset{n}{\Seq{1}{n}}| = (k-1)+1  = k$ for every $p \in P_{m,k-1}$.
+$p \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$.
+$p \cup \sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$f(p) \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$P_{n,k} = \{ x | x \subseteq \Seq{1}{n} and |x|=k \}$.
+($|f(p)| = k$ and $f(p) \subseteq \Seq{1}{n}$) for every $p \in P_{m,k-1}$.
+$f(p) \in P_{n,k}$ for every $p \in P_{m,k-1}$.
+$n \in f(p)$ for every $p \in P_{m,k-1}$.
+$f(p) \in P'$ for every $p \in P_{m,k-1}$.
+$f$ is a map from $P_{m,k-1}$ to $P'$.
+Let us show that $f$ is injective. 
+   Let $p,q \in P_{m,k-1}$.
+   Assume $f(p) = f(q)$.
+   We have $f(r) \setminus \sset{n}{\Seq{1}{n}} = (r \cup \sset{n}{\Seq{1}{n}}) \setminus \sset{n}{\Seq{1}{n}} = r$
+   for every $r \in  P_{m,k-1}$.
+   $p = f(p)\setminus \sset{n}{\Seq{1}{n}} = f(q)\setminus \sset{n}{\Seq{1}{n}} = q$.
+   Thus $p=q$.
+   QED.
+Let us show that $f$ is a surjection from $P_{m,k-1}$ onto $P'$.
+   Define $p(q) = q \setminus \sset{n}{\Seq{1}{n}}$ for $q \in P'$.
+   $p(q)$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $q \in P'$.
+   $q \subseteq \Seq{1}{n}$ for every $q \in P'$.
+   $q$ is finite for every $q \in P'$.
+   $\sset{n}{\Seq{1}{n}}$ is finite.
+   $p(q) \subseteq q$ for every $q \in P'$.
+   Thus $p(q) is finite$ for every $q \in P'$.
+   $p(q) \cup \sset{n}{\Seq{1}{n}} = q$ for every $q \in P'$.
+   $p(q)$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $q\in P'$.
+   $|q| = |p(q) \cup \sset{n}{\Seq{1}{n}}|  =  |p(q)| + |\sset{n}{\Seq{1}{n}}|$ for every $q \in P'$.
+   Therefore $k = |q| = |p(q)| + |\sset{n}{\Seq{1}{n}}| = |p(q)| + 1$ for every $q \in P'$.
+   $k =  |p(q)| + 1$ for every $q \in P'$.
+   Thus $|p(q)| = (|p(q)| + 1) -1 =  k-1$ for every $q \in P'$.
+   $\Seq{n}{n} = \sset{n}{\Seq{1}{n}}$.
+   $\Seq{1}{n-1} = \Seq{1}{m}$.
+   $\Seq{1}{n} = \Seq{1}{n-1} \cup \Seq{n}{n} = \Seq{1}{m} \cup  \sset{n}{\Seq{1}{n}}$.
+   $\Seq{1}{m} = \Seq{1}{n} \setminus \sset{n}{\Seq{1}{n}}$.
+   $p(q) \subseteq \Seq{1}{m}$ for every $q \in P'$.
+   ($p(q) \subseteq \Seq{1}{m}$ and $|p(q)| = k-1$) for every $q \in P'$.
+   $P_{m,k-1} = \{x | x \subseteq  \Seq{1}{m}$ and $|x| = k-1 \}$.
+   [timelimit 10]
+   $p(q) \in P_{m,k-1}$ for every $q \in P'$.
+   [timelimit 3]
+   $f(p(q)) = p(q) \cup  \sset{n}{\Seq{1}{n}} = q$ for every $q \in P'$.
+   Thus $q \in f[P_{m,k-1}]$ for every $q \in P'$.
+   QED.
+Therefore $f$ is a bijection between $P_{m,k-1}$ and $P'$.
+Thus $P_{m,k-1}$ and $P'$ are equinumerous.
+Let us show that $P_{m,k-1}$ is finite.
+  $P_{m,k-1} \subseteq \pow(\Seq{1}{m})$.
+  $\pow(\Seq{1}{m})$ is finite.
+  QED.
+$P_{m,k-1}$ and $P'$ are finite.
+(If $S,T$ are finite and equinumerous then $|S|= |T|$) for all sets $S,T$.
+Therefore $|P_{n-1,k-1}| = |P_{m,k-1}| = |P'|$.
+$|P'| = |P_{n-1,k-1}|$.
 
 
 
@@ -3692,43 +3802,128 @@ QED.
 QED.
 \end{proof}
 
-%\begin{axiom}
-%Let $n,k$ be natural numbers such that $k > n$.
-%$P_{n,k} = \emptyset$.
-%\end{axiom}
+\begin{signature}
+Let $X$ be a finite set such that $|X| = n$  and $n,k$ be natural numbers such that $k \leq n$.
+$P_{X,n,k}$ is a set.
+\end{signature} 
+
+\begin{axiom}[DefPX]
+Let $X$ be a finite set such that $|X| = n$  and $n,k$ be natural numbers such that $k \leq n$.
+$P_{X,n,k} = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
+\end{axiom}
+
+\begin{theorem}
+Let $n,k$ be natural numbers such that $k \leq n$.
+$P_{\Seq{1}{n},n,k}=P_{n,k}$.
+\end{theorem}
+\begin{proof}
+$P_{n,k} = \{ x | x \subseteq \Seq{1}{n} and |x|=k \}$.
+Let $X$ be a finite set such that $|X| = n$.
+[timelimit 20]
+$P_{X,n,k} = \{y|y is finite set such that y \subseteq X and |y| = k\}$(by DefPX).
+[timelimit 3]
+\end{proof}
+
+\begin{theorem}
+Let $n,k$ be natural numbers such that $k \leq n$.
+$|P_{\Seq{1}{n},n,k}|=|P_{n,k}|$.
+\end{theorem}
+
+\begin{theorem}
+Let $X$ be finite set such that $|X|=0$.
+$\emptyset \in P_{X,0,0}$.
+\end{theorem}
+\begin{proof}
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. $|\emptyset|=0$. $\emptyset$ is finite.
+$P_{X,0,0} = \{y | y is finite set such that y \subseteq X and |y| = 0\}$(by DefPX).
+\end{proof}
+
+\begin{theorem}
+Let $n,k$ be natural number such that $k \leq n$.
+Let $X$ be a finite set such that $|X|=n$.
+$|P_{X,n,k}|=|P_{n,k}|$.
+\end{theorem}
+\begin{proof}
+%Take a bijection $f$ between $X$ and $\Seq{1}{n}$.
+Case $n=0$.
+$k \leq n$.
+$k \leq 0$.
+$k = 0$.
+$\binom{0}{0} = 1$.
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. $|\emptyset|=k$.
+
+Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
+$Y = \emptyset$ for all finite sets $Y$ such that $|Y|=0$.
+
+$P_{X,n,k} = \{y | y is finite set such that y \subseteq X and |y| = k\}$(by DefPX).
+$|Y|=0$ for all $Y \in P_{X,n,k}$.
+
+$h$ is injective.
+$h(\emptyset) = 1$.
+$h$ is a surjection from $P_{X,n,k}$ onto $\Seq{1}{1}$.
+$h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
+[timelimit 3]
+Hence $|P_{X,n,k}| = 1$ and $|P_{n,k}| = 1$. End.
+
+Case$n>0$.
+Case$k>0$.
+%Let us show that $|P_{X,n,k}|=|P_{\Seq{1}{n},n,k}|$.
+%$|X|=n$. 
+%Let $x$ be finite set $x \subseteq X$ and $|x| = k$.
+$\Seq{1}{k} \subseteq \Seq{1}{n}$.
+$|\Seq{1}{k}|=k$.
+$\Seq{1}{k} \in P_{\Seq{1}{n},n,k}$.
+$P_{\Seq{1}{n},n,k}$ is nonempty.
+Take a bijection $f$ between $\Seq{1}{n}$ and $X$.
+$f[\Seq{1}{k}] \subseteq X$.
+
+Define $F(x)=f[x]$ for $x \in P_{\Seq{1}{n},n,k}$.
+$f \upharpoonright x$ is injective for all $x \in P_{\Seq{1}{n},n,k}$.
+Let us show that $f \upharpoonright x$ is a surjection from $x$ onto $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
+
+Let $x \in P_{\Seq{1}{n},n,k}$.
+Let us show that there exist $y \in x$ such that $x' = f(y)$ for all $x' \in f[x]$.
+Let $x' \in f[x]$.
+$|x|=k$.
+$x$ is nonempty.
+$f(x'') \in f[x]$ for all $x'' \in x$.
+$f[x]$ is nonempty.
+
+If $x' \in f[x]$ then there exist $y \in x$ such that $x' = f(y)$.
+Take $y \in x$ such that $x' = f(y)$.
+$\dom(f \upharpoonright x)= \dom(f) \cap x$.
+$\dom(f) = \Seq{1}{n}$.
+$x \subseteq \Seq{1}{n}$.
+$x \cap \Seq{1}{n} = x$.
+$y \in \dom(f)$.
+$((f \upharpoonright x)(y)) = f(y)$.
+$((f \upharpoonright x)(y)) = x'$.
+QED.
+QED.
+$f \upharpoonright x$ is a bijection between $x$ and $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
+$F(x)$ is finite for all  $x \in P_{\Seq{1}{n},n,k}$.
+$|F(x)| = k$ for all  $x \in P_{\Seq{1}{n},n,k}$.
+
+
+$F$ is a map from $P_{\Seq{1}{n},n,k}$ to $P_{X,n,k}$.
+$P_{X,n,k}$ is nonempty.
+
+
+%$F(x)$ is a bijection between $P_{X,n,k}$ and $P_{\Seq{1}{n},n,k}$.
+
+QED.
+QED.
+\end{proof}
 
 
 \end{forthel}
 
-Let us show that $(\sset{n}{\Seq{1}{n}} \cup x) \in P'$ for all $x \in P_{m,k-1}$.
-(100)$(\sset{n}{\Seq{1}{n}} \cup x) \subseteq \Seq{1}{n}$ for all $x \in P_{m,k-1}$.
-$n \in (\sset{n}{\Seq{1}{n}} \cup x)$ for all $x \in P_{m,k-1}$.
-$|\sset{n}{\Seq{1}{n}}| = 1$.
-$\sset{n}{\Seq{1}{n}}$ and $\Seq{1}{m}$ are disjoint.
-$x \subseteq \Seq{1}{m}$ for all $x \in P_{m,k-1}$.
-$\sset{n}{\Seq{1}{n}}$ and $x$ are disjoint for all $x \in P_{m,k-1}$.
-$x$ is finite for all $x \in P_{m,k-1}$.
-$|\sset{n}{\Seq{1}{n}} \cup x| = |\sset{n}{\Seq{1}{n}}| + |x|$ for all $x \in P_{m,k-1}$.
-$|\sset{n}{\Seq{1}{n}} \cup x| = 1 + (k-1)$ for all $x \in P_{m,k-1}$.
-$k = 1 + (k-1)$.
-(101)$|\sset{n}{\Seq{1}{n}} \cup x| = k$ for all $x \in P_{m,k-1}$.
 
-(102)($(\sset{n}{\Seq{1}{n}} \cup x) \subseteq \Seq{1}{n}$ and
-$|\sset{n}{\Seq{1}{n}} \cup x| = k$) for all $x \in P_{m,k-1}$.
-
-Take $x' \in P_{m,k-1}$.
-(104)$(x' \cup \sset{n}{\Seq{1}{n}}) \subseteq \Seq{1}{n}$.
-$x' \cup \sset{n}{\Seq{1}{n}} = \sset{n}{\Seq{1}{n}} \cup x'$.
-(105)$|(x' \cup \sset{n}{\Seq{1}{n}})| = k$.
-Let $x'' =(x' \cup \sset{n}{\Seq{1}{n}})$.
-If $|x''|=k$ and $x'' \subseteq \Seq{1}{n}$ then $x'' \in P_{n,k}$.
-[timelimit 20]
-(106)$(x' \cup \sset{n}{\Seq{1}{n}}) \in P_{n,k}$(by 105, 104).
-(107)$(x \cup \sset{n}{\Seq{1}{n}}) \in P_{n,k}$ for all $x \in P_{m,k-1}$(by 106).
-[timelimit 3]
-(108)$x \cup \sset{n}{\Seq{1}{n}} = \sset{n}{\Seq{1}{n}} \cup x$ for all $x \in P_{m,k-1}$.
-$(\sset{n}{\Seq{1}{n}} \cup x) \in P_{n,k}$ for all $x \in P_{m,k-1}$(by 107, 108).
-QED.
 
 
 \begin{signature}
@@ -3750,19 +3945,7 @@ $|P_{X,n,k}| = |P_{X \setminus \sset{\xi}{X},n-1,k-1}| + |P_{X \setminus \sset{\
 
 \end{proof}
 [prove on]
-\begin{theorem}
-Let $X$ be finite set such that $|X|=0$.
-$\emptyset \in P_{X,0,0}$.
-\end{theorem}
-\begin{proof}
-$\Seq{1}{0} = \emptyset$.
-Thus $X = \emptyset$.
-$\emptyset \subseteq X$. $|\emptyset|=0$.
-Let $M =\{y | y is finite set such that y \subseteq X and |y| = 0\}$.
-$\emptyset \in M$.
-$0 \leq 0$.
-$M = P_{X,0,0}$.
-\end{proof}
+
 
 \begin{theorem}
 Let $X$ be a finite set.
