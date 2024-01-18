@@ -2907,7 +2907,7 @@ Then $m1 \leq n1$ and $m \leq n$.
   Qed.
   \end{proof}
   
-  \begin{lemma}
+  \begin{lemma}[disjoint finite sets]
   Let $x,y$ be disjoint finite sets.
   Then $x \cup y$ is a finite set and $|x \cup y| = |x| + |y|$.
   \end{lemma}
@@ -3514,19 +3514,264 @@ $\frac{n \cdot (n-1)!}{1 \cdot (n-1)!}
 = \frac{n}{1}$.
 \end{proof}
 
+[prove on]
+%\begin{theorem}[10101]
+
+%  For all natural numbers $n,k$ and all finite sets $X,Y$
+%  if $|X| = n$ and $k \leq n$ and $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$
+%  then $|Y| = \binom{n}{k}$.
+%  \end{theorem}
+%\begin{proof}[by induction on $n$]
+
+%Let $n,k$ be a natural numbers such that $k \leq n$.
+%Let $X$ be a finite set. Assume $|X| = n$.
+%Let $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
+
+Let $n,k$ denote natural numbers.
+\begin{signature}
+$P_{n,k}$ is a set.
+\end{signature}
+
+\begin{axiom}[defP]
+Let $n,k$ be natural numbers.
+ $P_{n,k} = \{ x | x \subseteq \Seq{1}{n} and |x|=k \}$.
+\end{axiom}
+
+\begin{lemma}
+Let $n,k$ be natural numbers such that $k>n$.
+$P_{n,k} = \emptyset$.
+\end{lemma}
+\begin{proof}[by Contradiction]
+Assume $P_{n,k}$ is nonempty.
+Take $x \in P_{n,k}$.
+Then $x \subseteq \Seq{1}{n}$.
+$|x|=k$.
+$|x| \geq |\Seq{1}{n}|$. Contradiction.
+\end{proof}
+
+\begin{lemma}
+$|P_{0,0}|=1$.
+\end{lemma}
+\begin{proof}
+$|\emptyset|=0$.
+$\emptyset \subseteq \Seq{1}{0}$.
+Thus $\emptyset \in P_{0,0}$.
+Define $h(x)=1$ for $x \in P_{0,0}$.
+$h$ is bijection between $P_{0,0}$ and $\Seq{1}{1}$.
+\end{proof}
+
+\begin{lemma}
+$|P_{n,n}|=1$ for all natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be natural number.
+$\Seq{1}{n} \subseteq \Seq{1}{n}$.
+$\Seq{1}{n} \in P_{n,n}$.
+$P_{n,n} \setminus \sset{\Seq{1}{n}}{P_{n,n}} = \emptyset$.
+$P_{n,n} = \sset{\Seq{1}{n}}{P_{n,n}} \cup \emptyset$.
+$\sset{\Seq{1}{n}}{P_{n,n}}$ and $\emptyset$ are disjoint.
+$|\sset{\Seq{1}{n}}{P_{n,n}}|=1$.
+\end{proof}
 
 \begin{theorem}
-  For all natural numbers $n,k$ and all finite sets $X,Y$
-  if $|X| = n$ and $k \leq n$ and $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$
-  then $|Y| = \binom{n}{k}$.
-  \end{theorem}
-\begin{proof}[by induction]
+$|P_{n,k}|= \binom{n}{k}$ for all natural numbers $n,k$.
+\end{theorem}
+\begin{proof}[by Induction on $n$]
+Let $n,k$ be natural numbers.
+Case $n < k$.Trivial.
+Case $n = k$.Trivial.
+Case $k < n$.
 
-Let $n,k$ be a natural numbers such that $k \leq n$.
-Let $X$ be a finite set. Assume $|X| = n$.
-Let $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
+Case $n=0$.Trivial.
+
+Case $n>0$.
+Case $k=0$.
+For all $x \in P_{n,k}$ $|x| = 0$.
+Therefore $x = \emptyset$ for all $x \in P_{n,k}$.
+$\emptyset \subseteq \Seq{1}{n}$. Thus $\emptyset \in P_{n,k}$.
+Define $h(x) = 1$ for $x \in P_{n,k}$. 
+[timelimit 10]
+$h$ is a bijection between $P_{n,k}$ and $\Seq{1}{1}$.
+[timelimit 3]
+Hence $|P_{n,k}| = 1$ and $\binom{n}{k} = 1$.
+QED.
+
+Case $k>0$.
+Let $m$ be a natural number such that $m+1=n$.
+$m$ is inductively smaller than $n$.
+$|P_{m,k}|=\binom{m}{k}$.
+$|P_{m,k-1}|=\binom{m}{k-1}$.
+$n \in \Seq{1}{n}$.
+$k \leq m$.
 
 
+Define $P' = \{p| p \in P_{n,k} and n \in p\}$.
+$P' \subseteq P_{n,k}$. 
+
+
+$\Seq{1}{k} \subseteq \Seq{1}{m}$.
+$\Seq{1}{k} \in P_{m,k}$.
+$P_{m,k}$ is nonempty.
+
+Let us show that $P_{m,k} \subseteq P_{n,k}$.
+$|x|=k$ for all $x \in P_{m,k}$.
+$x \subseteq \Seq{1}{m}$ for all $x \in P_{m,k}$.
+$x \subseteq \Seq{1}{n}$ for all $x \in P_{m,k}$.
+$x \in P_{n,k}$ for all $x \in P_{m,k}$(by defP).
+QED.
+
+
+$P_{n,k}$ is nonempty.
+Let us show that $p \in (P' \cup P_{m,k})$ for all $p \in P_{n,k}$.
+Let $p \in P_{n,k}$.
+
+Case $n \in p$.
+$p \in P'$.END.
+
+Case $n \notin p$.
+$p \subseteq \Seq{1}{m}$.
+$\Seq{1}{m} \subseteq \Seq{1}{n}$.
+END.
+QED.
+
+$P' \cup P_{m,k} = P_{n,k}$.
+$P'$ and $P_{m,k}$ are disjoint.
+$P_{n,k} \subseteq \pow(\Seq{1}{n})$.
+$P_{n,k}$ is finite.
+$P'$ is finite.
+$|P_{n,k}|=|P'|+|P_{m,k}|$.
+
+Let us show that $|P'|=|P_{m,k-1}|$.
+$k-1 \leq m$.
+$\Seq{1}{k-1} \subseteq \Seq{1}{m}$.
+$|\Seq{1}{k-1}|=k-1$.
+$\Seq{1}{k-1} \in P_{m,k-1}$.
+$n \notin \Seq{1}{k-1}$.
+$(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}}) \subseteq \Seq{1}{n}$.
+$\Seq{1}{k-1} \subseteq \Seq{1}{n}$.
+$|\sset{n}{\Seq{1}{n}}| = 1$.
+$|\Seq{1}{k-1}|=k-1$.
+
+$k = (k-1) + 1$.
+$\Seq{1}{k-1}$ is finite.
+$\sset{n}{\Seq{1}{n}}$ is finite.
+$\sset{n}{\Seq{1}{n}}$ and $\Seq{1}{k-1}$ are disjoint.
+$(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}})$ is finite.
+[timelimit 10]
+$|(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}})| = |(\Seq{1}{k-1})| + |(\sset{n}{\Seq{1}{n}})|$(by disjoint finite sets).
+[timelimit 3]
+$|(\Seq{1}{k-1} \cup \sset{n}{\Seq{1}{n}})| = k$.
+$P'$ is nonempty.
+Take $y \in P'$.
+
+Assume $p \in P_{m,k-1}$.
+$p \subseteq \Seq{1}{m}$.
+Let $pn = p \cup \sset{n}{\Seq{1}{n}}$.
+[prove off]
+$|pn| = k$.
+[prove on]
+$pn \subseteq \Seq{1}{n}$.
+$pn \in P_{n,k}$.
+$pn \in P'$.
+
+
+
+
+QED.
+
+$|P_{m,k}|=\binom{n-1}{k}$.
+$|P_{m,k-1}|=\binom{n-1}{k-1}$.
+$|P'|=\binom{n-1}{k-1}$.
+$\binom{n}{k}=\binom{n-1}{k-1} + \binom{n-1}{k}$.
+$|P_{n,k}|=\binom{n}{k}$.
+
+QED.
+
+QED.
+
+QED.
+\end{proof}
+
+%\begin{axiom}
+%Let $n,k$ be natural numbers such that $k > n$.
+%$P_{n,k} = \emptyset$.
+%\end{axiom}
+
+
+\end{forthel}
+
+Let us show that $(\sset{n}{\Seq{1}{n}} \cup x) \in P'$ for all $x \in P_{m,k-1}$.
+(100)$(\sset{n}{\Seq{1}{n}} \cup x) \subseteq \Seq{1}{n}$ for all $x \in P_{m,k-1}$.
+$n \in (\sset{n}{\Seq{1}{n}} \cup x)$ for all $x \in P_{m,k-1}$.
+$|\sset{n}{\Seq{1}{n}}| = 1$.
+$\sset{n}{\Seq{1}{n}}$ and $\Seq{1}{m}$ are disjoint.
+$x \subseteq \Seq{1}{m}$ for all $x \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}}$ and $x$ are disjoint for all $x \in P_{m,k-1}$.
+$x$ is finite for all $x \in P_{m,k-1}$.
+$|\sset{n}{\Seq{1}{n}} \cup x| = |\sset{n}{\Seq{1}{n}}| + |x|$ for all $x \in P_{m,k-1}$.
+$|\sset{n}{\Seq{1}{n}} \cup x| = 1 + (k-1)$ for all $x \in P_{m,k-1}$.
+$k = 1 + (k-1)$.
+(101)$|\sset{n}{\Seq{1}{n}} \cup x| = k$ for all $x \in P_{m,k-1}$.
+
+(102)($(\sset{n}{\Seq{1}{n}} \cup x) \subseteq \Seq{1}{n}$ and
+$|\sset{n}{\Seq{1}{n}} \cup x| = k$) for all $x \in P_{m,k-1}$.
+
+Take $x' \in P_{m,k-1}$.
+(104)$(x' \cup \sset{n}{\Seq{1}{n}}) \subseteq \Seq{1}{n}$.
+$x' \cup \sset{n}{\Seq{1}{n}} = \sset{n}{\Seq{1}{n}} \cup x'$.
+(105)$|(x' \cup \sset{n}{\Seq{1}{n}})| = k$.
+Let $x'' =(x' \cup \sset{n}{\Seq{1}{n}})$.
+If $|x''|=k$ and $x'' \subseteq \Seq{1}{n}$ then $x'' \in P_{n,k}$.
+[timelimit 20]
+(106)$(x' \cup \sset{n}{\Seq{1}{n}}) \in P_{n,k}$(by 105, 104).
+(107)$(x \cup \sset{n}{\Seq{1}{n}}) \in P_{n,k}$ for all $x \in P_{m,k-1}$(by 106).
+[timelimit 3]
+(108)$x \cup \sset{n}{\Seq{1}{n}} = \sset{n}{\Seq{1}{n}} \cup x$ for all $x \in P_{m,k-1}$.
+$(\sset{n}{\Seq{1}{n}} \cup x) \in P_{n,k}$ for all $x \in P_{m,k-1}$(by 107, 108).
+QED.
+
+
+\begin{signature}
+Let $X$ be a finite set such that $|X| = n$  and $n,k$ be natural numbers such that $k \leq n$.
+$P_{X,n,k}$ is a set.
+\end{signature} 
+
+\begin{axiom}
+Let $X$ be a finite set such that $|X| = n$  and $n,k$ be natural numbers such that $k \leq n$.
+$P_{X,n,k} = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
+\end{axiom}
+[prove off]
+\begin{theorem}
+Let $X$ be a nonempty finite set such that $|X| = n$  and $n,k$ be natural numbers such that $k \leq n$.
+Let $\xi \in X$.
+$|P_{X,n,k}| = |P_{X \setminus \sset{\xi}{X},n-1,k-1}| + |P_{X \setminus \sset{\xi}{X},n-1,k}|$.
+\end{theorem}
+\begin{proof}
+
+\end{proof}
+[prove on]
+\begin{theorem}
+Let $X$ be finite set such that $|X|=0$.
+$\emptyset \in P_{X,0,0}$.
+\end{theorem}
+\begin{proof}
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. $|\emptyset|=0$.
+Let $M =\{y | y is finite set such that y \subseteq X and |y| = 0\}$.
+$\emptyset \in M$.
+$0 \leq 0$.
+$M = P_{X,0,0}$.
+\end{proof}
+
+\begin{theorem}
+Let $X$ be a finite set.
+$|P_{X,n,k}| = \binom{n}{k}$ for all natural numbers $n$ 
+such that $k$ is a natural number and $k \leq n$ and $|X|=n$.
+\end{theorem}
+\begin{proof}[by Induction on $n$]
+Let $n,k$ be natural numbers such that $k \leq n$.
+Let $X$ be a finite set such that $|X| = n$.
 Case $n=0$.
 $k \leq n$.
 $k \leq 0$.
@@ -3534,15 +3779,48 @@ $k = 0$.
 $\binom{0}{0} = 1$.
 $\Seq{1}{0} = \emptyset$.
 Thus $X = \emptyset$.
-$\emptyset \subseteq X$. Thus $\emptyset \in Y$.
-Define $h(x) = 1$ for $x \in Y$. 
+$\emptyset \subseteq X$. $|\emptyset|=k$.
+
+Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
 [timelimit 10]
-$h$ is a bijection between $Y$ and $\Seq{1}{1}$.
+$h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
 [timelimit 3]
-Hence $|Y| = 1$ and $\binom{n}{k} = 1$. End.
+Hence $|P_{X,n,k}| = 1$ and $\binom{n}{k} = 1$. End.
+\end{proof}
+
+
+
+
+
+\begin{theorem}
+  For all natural numbers $n$ (for all natural numbers $k$ and all sets $X$
+  if $X$ is finite and $|X| = n$ and $k \leq n$
+  then $P_{X,n,k}$ is finite and $|P_{X,n,k}| = \binom{n}{k}$).
+\end{theorem}
+\begin{proof}
+[prove off]
+
+Case $n=0$.
+Let $X$ be a finite set. Assume $|X| = n$.
+%Let $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
+$k \leq n$.
+$k \leq 0$.
+$k = 0$.
+$\binom{0}{0} = 1$.
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
+[timelimit 10]
+$h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
+[timelimit 3]
+Hence $|P_{X,n,k}| = 1$ and $\binom{n}{k} = 1$. End.
 
 
 Case $n \neq 0$.
+Let $X$ be a finite set. Assume $|X| = n$.
+%et $Y$ be a finite set such that $Y = \{y|y is finite set such that y \subseteq X and |y| = k\}$.
 Take a natural number $m$ such that $m+1 = n$.
 $m$ is inductively smaller than $n$.
 There exists a bijection between $X$ and $\Seq{1}{n}$ and $1 \in \Seq{1}{n}$.
@@ -3550,9 +3828,9 @@ Thus $X$ is nonempty.
 Take a bijection $g$ between $X$ and $\Seq{1}{n}$.
 Take $\xi \in X$ such that $g(\xi)=n$.
 
-Define $M = \{x | x \in Y and \xi \in x\}$.
-Define $N = \{x | x \in Y and \xi \notin x\}$.
-$M \cup N = Y$.
+Define $M = \{x | x \in P_{X,n,k} and \xi \in x\}$.
+Define $N = \{x | x \in P_{X,n,k} and \xi \notin x\}$.
+$M \cup N = P_{X,n,k}$.
 $M, N$ are disjoint.
 
 Take $U = X \setminus \sset{\xi}{X}$. $U \subseteq X$.
@@ -3576,9 +3854,9 @@ $x \in U$ and $f(x) = g(x) = y$. End.
 QED.
 [timelimit 3]
 
-$M \subseteq Y$.                     
+$M \subseteq P_{X,n,k}$.                     
 Therefore $M$ is finite. 
-$N \subseteq Y$.
+$N \subseteq P_{X,n,k}$.
 Therefore $N$ is finite.
 
 Case $k=0$.
@@ -3587,14 +3865,14 @@ $\binom{n}{0}=1$.
 
 $\binom{n}{k} = \binom{n}{0} = 1$.
 For all $x \in Y$ $|x| = 0$.
-Therefore $x = \emptyset$ for all $x \in Y$.
+Therefore $x = \emptyset$ for all $x \in P_{X,n,k}$.
 $Y = \{x | x \subseteq X and x = \emptyset \}$.
-$\emptyset \subseteq X$. Thus $\emptyset \in Y$.
-Define $h(x) = 1$ for $x \in Y$. 
+$\emptyset \subseteq X$. Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
 [timelimit 10]
 $h$ is a bijection between $Y$ and $\Seq{1}{1}$.
 [timelimit 3]
-Hence $|Y| = 1$ and $\binom{n}{k} = 1$.
+Hence $|P_{X,n,k}| = 1$ and $\binom{n}{k} = 1$.
 QED.
 
 
@@ -3606,69 +3884,36 @@ $|Y| = 1$.
 $\binom{n}{n}=1$.
 
 QED.
-[prove on]
-Case $k=1$.
-$\binom{n}{k}= \binom{n}{1}$.
-$1 \leq n$.
-$\binom{n}{1}=n$.
-Then $Y = \{x | x is finite set and x \subseteq X and |x|=1 \}$.
-Take a bijection $f$ between $X$ and $\Seq{1}{n}$.
-Let us show that $\sset{x}{X} \in Y$ for every $x \in X$.
-$|\sset{x}{X}|=1$ for all $x \in X$.
-$\sset{x}{X} \subseteq X$ for all $x \in X$.
-QED.
-Define $Y' = \{\sset{x}{X}| x \in X \}$.
-$Y' \subseteq Y$.
-Define $jd(x)=x$ for $x \in Y'$.
-
-$jd$ is a surjection from $Y'$ onto $Y$.
-Indeed we can show that every element of $Y$ is a value of $jd$.
-Take $d \in Y$.
-$d$ is a finite set.
-$|d|=1$.
-Take $d' \in d$.
-$\sset{d'}{d} \subseteq d$.
-$d \setminus \sset{d'}{d}$ is finite.
-$|d \setminus \sset{d'}{d}| < |d| = 1$.
-Therefore $|d \setminus \sset{d'}{d}|=0$.
-Then $d \setminus \sset{d'}{d} = \emptyset$.
-$d = \sset{d'}{d}$.
-$d' \in X$.
-$\sset{d'}{X} = \sset{d'}{d}$.
-Then $jd(\sset{d'}{X})
-=jd(\sset{d'}{d})
-=jd(d)$.
-$jd(\sset{d'}{X})=\sset{d'}{X} = d$. 
-Therefore $jd(x)=x$ for all $x \in Y$.
-Therefore $x \in \range(jd)$ for all $x \in Y$.
-If $d \in Y$ then $d = \sset{d'}{X}$ and $d \subseteq X$.
-
-%Then $x = jd(x) \in jd[Y']$ for all $x \in Y$.
-%$Y \subseteq jd[Y']$.
-%not $id(x)=d$ for all $x \in Y'$.
-%Contradiction.
-
-QED.
-$Y \subseteq Y'$.
-$|Y|=n$.
-
-QED.
 [prove off]
+Case $k=1$.
+
+
+QED.
+[prove on]
 
 Case $k > 1$ and $k < n$.
 %Proof by Induction.
-[prove off]
-Take a natural number $k'$ such that $k'+1 = k$.
-$k'$ is inductively smaller than $k$.
-Take a natural number $n'$ such that $n'+ 1 = n$.
-$n'$ is inductively smaller than $n$.
-[prove off]
-$m$ is inductively smaller than $n$.
+[prove on]
+%Take a natural number $k'$ such that $k'+1 = k$.
+%$k'$ is inductively smaller than $k$.
+%Take a natural number $n'$ such that $n'+ 1 = n$.
+%$n'$ is inductively smaller than $n$.
+[prove on]
+(10101)$m$ is inductively smaller than $n$.
 $k-1$ is inductively smaller than $k$.
 $M = \{x | x \subseteq X and \xi \in x and |x|=k\}$.
+$k \leq n$.
+$k-1 \leq  n-1 = m$.
+$k-1 \leq m$.
 Let $M'$ be a finite set such that $M' = \{x | x \subseteq U and |x|=k-1 \}$.
+$U$ is finite.
+$|U| = m$.
+[timelimit 10]
+%[search 7]
+If $m$ is inductively smaller than $n$ and $U$ is finite and $|U| = m$ and $k-1 \leq m$ and $M'$ is finite and 
+ $M' = \{x | x \subseteq U and |x|=k-1 \}$ then $|M'|=\binom{m}{k-1}$.
 Then $|M'|=\binom{m}{k-1}$.
-
+[timelimit 3]
 [prove off]
 
 %$N' = \{x | x is finite set and x \subseteq U and |x| = k' \}$.
@@ -3677,7 +3922,7 @@ Then $|M'|=\binom{m}{k-1}$.
 %Then $|N'|=\binom{m}{k'}$ (by Induction).
 %$1 < k \leq n$.
 $\binom{n}{k} = \binom{(n-1)}{(k-1)} + \binom{(n-1)}{k}$.
-$|M| = \binom{n'}{k'}$.
+%$|M| = \binom{n'}{k'}$.
 
 
 [prove off]
@@ -3719,7 +3964,7 @@ QED.
 \end{proof}
 
 
-\end{forthel}
+%\end{forthel}
 
 \begin{thebibliography}{plain}
 
