@@ -3871,10 +3871,27 @@ $h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
 Hence $|P_{X,n,k}| = 1$ and $|P_{n,k}| = 1$. End.
 
 Case$n>0$.
+Case$k=0$.
+$|X| = n$.
+$\emptyset \subseteq X$. $|\emptyset|=k$.
+$P_{X,n,k} = \{y | y is finite set such that y \subseteq X and |y| = k\}$(by DefPX).
+Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
+$Y = \emptyset$ for all finite sets $Y$ such that $|Y|=0$.
+
+$P_{X,n,k} = \{y | y is finite set such that y \subseteq X and |y| = k\}$(by DefPX).
+$|Y|=0$ for all $Y \in P_{X,n,k}$.
+
+$h$ is injective.
+$h(\emptyset) = 1$.
+$h$ is a surjection from $P_{X,n,k}$ onto $\Seq{1}{1}$.
+$h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
+[timelimit 3]
+Hence $|P_{X,n,k}| = 1$ and $|P_{n,k}| = 1$. End.
+
+
 Case$k>0$.
-%Let us show that $|P_{X,n,k}|=|P_{\Seq{1}{n},n,k}|$.
-%$|X|=n$. 
-%Let $x$ be finite set $x \subseteq X$ and $|x| = k$.
+
 $\Seq{1}{k} \subseteq \Seq{1}{n}$.
 $|\Seq{1}{k}|=k$.
 $\Seq{1}{k} \in P_{\Seq{1}{n},n,k}$.
@@ -3891,12 +3908,8 @@ Let us show that $f \upharpoonright x$ is a surjection from $x$ onto $f[x]$ for 
 Let $x \in P_{\Seq{1}{n},n,k}$.
 Let $g=(f \upharpoonright x)$.
 
-Let us show that $f[x] = g[x]$.
 
-$g[x] \subseteq f[x]$.
-QED.
 
-$f[x] = g[x]$.
 $\dom(f \upharpoonright x) = \dom(f) \cap x$.
 $x \subseteq \Seq{1}{n}$.
 $x \subseteq \dom(f)$.
@@ -3904,23 +3917,149 @@ $\dom(f) \cap x = x$.
 
 $\dom(f \upharpoonright x) = x$.
 $\dom(f \upharpoonright x) = \dom(g)$.
+
+Let us show that $f[x] = g[x]$.
+$f(x') \in f[x]$ for all $x' \in x$.
+
+$((f \upharpoonright x)[x]) \subseteq f[x]$.
+
+$g[x] \subseteq f[x]$.
+QED.
+
 $g$ is a surjection from $x$ onto $g[x]$(by 10001).
 QED.
 
+(500)$f \upharpoonright x$ is a bijection between $x$ and $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
 
+Let us show that $|f[x]|=k$ for all  $x \in P_{\Seq{1}{n},n,k}$.
 $f \upharpoonright x$ is a bijection between $x$ and $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
+Let $x \in P_{\Seq{1}{n},n,k}$.
+Let $g=(f \upharpoonright x)$.
+(303)$g$ is a bijection between $x$ and $g[x]$.
+$x \subseteq \Seq{1}{n}$.
+$x$ is finite.
+$g[x]$ is finite.
+$x \sim g[x]$(by 303).
+QED.
+
+$F(x)=f[x]$ for all  $x \in P_{\Seq{1}{n},n,k}$.
 $F(x)$ is finite for all  $x \in P_{\Seq{1}{n},n,k}$.
 $|F(x)| = k$ for all  $x \in P_{\Seq{1}{n},n,k}$.
+$f[x] \subseteq X$ for all  $x \in P_{\Seq{1}{n},n,k}$.
+$F(x) \subseteq X$ for all $x \in P_{\Seq{1}{n},n,k}$.
 
+Let us show that $F$ is a map from $P_{\Seq{1}{n},n,k}$ to $P_{X,n,k}$.
+$\dom(F) = P_{\Seq{1}{n},n,k}$.
+Let us show that $F[P_{\Seq{1}{n},n,k}] \subseteq P_{X,n,k}$.
+Let $x \in P_{\Seq{1}{n},n,k}$.
+Let $x' = F(x)$.
+$x' \subseteq X$.
+$x'$ is finite.
+$|x'|=k$.
+$P_{X,n,k} = \{y | y is finite set such that y \subseteq X and |y| = k\}$(by DefPX).
+$x' \in P_{X,n,k}$.
+QED.
+QED.
 
-$F$ is a map from $P_{\Seq{1}{n},n,k}$ to $P_{X,n,k}$.
 $P_{X,n,k}$ is nonempty.
 
 
-%$F(x)$ is a bijection between $P_{X,n,k}$ and $P_{\Seq{1}{n},n,k}$.
+
+
+Let us show that $F$ is a surjection from $P_{\Seq{1}{n},n,k}$ onto $P_{X,n,k}$.
+Let $x \in P_{X,n,k}$.
+$P_{X,n,k} = \{y | y is finite set such that y \subseteq X and |y| = k\}$(by DefPX).
+$x \subseteq X$.
+$f$ is a bijection between $\Seq{1}{n}$ and $X$.
+
+Then $\inv{f}$ is a bijection between $X$ and $\Seq{1}{n}$.
+$\inv{f} \upharpoonright x$ is injective.
+$(\inv{f} \upharpoonright x)[x]  \subseteq (\inv{f} \upharpoonright x)[x]$.
+$\inv{f} \upharpoonright x$ is a surjection from $x$ onto $(\inv{f} \upharpoonright x)[x]$.
+$\inv{f}[x] = (\inv{f} \upharpoonright x)[x]$.
+(501)$\inv{f} \upharpoonright x$ is bijection between $x$ and $\inv{f}[x]$.
+
+$|x| = k$.
+
+
+
+Let us show that $|(\inv{f}[x])| = |x|$.
+(503)(If $a$ and $b$ are equinumerous then $|a|=|b|$) for all finite sets $a,b$.
+Therefore $\inv{f}[x] \subseteq \Seq{1}{n}$.
+$\inv{f}[x]$ is a finite set.
+$x$ is a finite set.
+
+$((\inv{f} \upharpoonright x)[x]) = \inv{f}[x]$.
+$((\inv{f} \upharpoonright x)[x])$ is finite.
+%$|((\inv{f} \upharpoonright x)[x])|=k$(by 501).
+$(\inv{f}[x]) \sim x$.
+(502)$(\inv{f}[x])$ and $x$ are equinumerous.
+QED.
+
+Therefore $|(\inv{f}[x])|=k$.
+$\inv{f}[x]$ is a finite set.
+$\inv{f}[x] \subseteq \Seq{1}{n}$.
+$\Seq{1}{n}$ is a finite set such that $|\Seq{1}{n}|=n$.
+$P_{\Seq{1}{n},n,k} = \{y|y is finite set such that y \subseteq \Seq{1}{n} and |y| = k\}$(by DefPX).
+$(\inv{f}[x]) \in P_{\Seq{1}{n},n,k}$.
+$f[(\inv{f}[x])] = x$.
+$F(\inv{f}[x]) = x$.
+QED.
+
+Let us show that $F$ is injective.
+$P_{\Seq{1}{n},n,k}$ is nonempty.
+Let $x,y \in P_{\Seq{1}{n},n,k}$.
+Assume $F(x) = F(y)$.
+
+Let us show that $x = y$.
+$f[x] = f[y]$.
+$f$ is a bijection between $\Seq{1}{n}$ and $X$.
+$\inv{f}$  is a bijection between $X$ and $\Seq{1}{n}$.
+$f$ is injective.
+$(\inv{f}[f[x]]) = (\inv{f}[f[y]])$.
+((If $h$ is injective then $\inv{h}(h(a))=a$)for all $a \in \dom(h)$)for all maps $h$.
+Let us show that $\inv{f}[f[y]]=y$.
+Let $y' \in y$.
+((If $h$ is injective then $\inv{h}(h(a))=a$)for all $a \in \dom(h)$)for all maps $h$.
+$f$ is injective map.
+$y' \in \dom(f)$.
+$\inv{f}(f(y')) = y'$.
+QED.
+
+Let us show that $\inv{f}[f[x]]=x$.
+Let $x' \in x$.
+((If $h$ is injective then $\inv{h}(h(a))=a$)for all $a \in \dom(h)$)for all maps $h$.
+$f$ is injective map.
+$x' \in \dom(f)$.
+$\inv{f}(f(x')) = x'$.
+QED.
+QED.
+
+QED.
+
+$F$ is a bijection between $P_{\Seq{1}{n},n,k}$ and $P_{X,n,k}$.
+
+Let us show that $|P_{X,n,k}|=|P_{\Seq{1}{n},n,k}|$.
+(If $a$ and $b$ are equinumerous then $|a|=|b|$) for all finite sets $a,b$.
+$P_{X,n,k} \subseteq \pow(X)$.
+$P_{X,n,k}$ is finite set.
+$P_{\Seq{1}{n},n,k}$ is finite set.
+$P_{\Seq{1}{n},n,k} \sim P_{X,n,k}$.
+$P_{\Seq{1}{n},n,k}$ and $P_{X,n,k}$ are equinumerous.
+QED.
+
 
 QED.
 QED.
+\end{proof}
+
+\begin{theorem}
+Let $n,k$ be natural number such that $k \leq n$.
+Let $X$ be a finite set such that $|X|=n$.
+$|P_{X,n,k}|=\binom{n}{k}$.
+\end{theorem}
+\begin{proof}
+$|P_{X,n,k}|=|P_{n,k}|$.
 \end{proof}
 
 
