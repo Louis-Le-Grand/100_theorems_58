@@ -1,7 +1,8 @@
 \documentclass{article}
 \usepackage[english]{babel}
-\usepackage{../lib/tex/naproche}
+\usepackage{../../Isabelle2023/contrib/naproche-20230902/lib/tex/naproche}
 \usepackage{amssymb}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -16,7 +17,7 @@
 
 \title{Formalizing the binomial coefficient in \Naproche{}}
 
-\author{Nora Depenheuer, Johannes Folltmann, Simon Korswird,\\
+\author{Johannes Folltmann, Simon Korswird,\\
 Ludwig Monnerjahn, Lars Nießen, Hannah Scholz\\
 \emph{Mathematical Institute, University of Bonn, Germany}
 }
@@ -24,26 +25,165 @@ Ludwig Monnerjahn, Lars Nießen, Hannah Scholz\\
 \maketitle
 
 \section{Introduction}
-In this document we give a proof on the Binomial coefficient and its relation to the k-elemantary subsets of a n-elemantery set.
-This is part of the 100 Theorems challange from Wiedijk. In this Case we will prove Theorem Formula for the Number of Combinations
+In this document we give a proof on the binomial coefficient and its relation to the $k$-element subsets of an $n$-element set.
+This is part of the \href{https://www.cs.ru.nl/~freek/100/}{100 theorems challenge} which is being tracked by Freek Wiedijk. Here we will prove the "Formula for the Number of Combinations"
 (\#58). 
 
-To give an overview of this documents work, we want to explain our steps. We firstly will introduce the Factorial function on natural numbers in the fist section.
-Then we proof some basic facts about the factorial function therefore we can use it in the next steps. The secound section will introduce 
-the binomial coefficient and its basic behavore. The first big proof is the identity on the binomal function $\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}$.
+To give an overview of this document we explain the purpose of the different sections. 
+The first sections deals with some preliminaries. We mainly use this section to prove that the subset of a finite set is finite.
+Then we introduce the factorial in the third section.
+We prove some basic facts about the factorial which we will use in the later sections. The fourth section introduces 
+the binomial coefficient and its basic properties. The most important proof of this section is the sum of binomial coefficients $\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}$.
 
-The main work is in section 3 where we proof the actual theorem(\# 58). To make the \Naproche System work we introduced some new signutures, 
-to be able to make the real statment as compact as possible. The real proof will use Induction on $n$ in $\binom{n}{k}$ 
-and in the induction step we used the identity on the binomail coefficient as mentioned above. To used this identity we split the set of k-elemantary subsets
-into two set with one containing a fixed element and the other dont. 
+We prove the actual theorem (\# 58) in section 5. To make it easier to process for the \Naproche system we introduce some new signutures. 
+That way we are able to make the statement as compact as possible. The proof uses induction on the size of the set
+and in the induction step we use the sum of binomial coefficients as mentioned above. To use this identity we split the set of k-element subsets
+into two disjoint sets where one is the set of subsets which contain a fixed element and the other is the set of subsets which don't. 
 
-To use some facts about sets and natural numbers we load the file 100\_theorems.ftl.tex every futher statment about sets and numbers we proof on our way.
+To use some facts about sets and numbers we load the file \textit{100\_theorems.ftl.tex}. We will prove any additionally needed statement on our way.
 \begin{forthel}
    [prove off][check off]
    [readtex \path{100_theorem.ftl.tex}]
    [prove on][check on]
 \end{forthel}
 
+\section{Preliminaries}
+
+\begin{forthel}
+	
+\begin{lemma}[reduction of fractions]
+	Let $k,l,n$ be integers such that $l,n$ are nonzero.
+	Then $\frac{k}{l} = \frac{k\cdot n}{l \cdot n}$. 
+\end{lemma}
+
+\begin{lemma}
+	Let $l$,$m$ and $n$ be integers such that $n$ is nonzero.
+	Then $\frac{l}{n} + \frac{m}{n} = \frac{l + m}{n}$.
+\end{lemma}
+
+\begin{lemma}
+	For all natural numbers $n$
+	if $x \in \Seq{1}{n}$
+	then $\sset{x}{\Seq{1}{n}}$ is finite and $|\sset{x}{\Seq{1}{n}}| = 1$. 
+\end{lemma}
+\begin{proof}[by induction on $n$]
+	Let $n$ be a natural number.
+	
+	Case $n=0$. Trivial.
+	
+	Case $n > 0$. 
+	Let $x \in \Seq{1}{n}$. 
+	
+	Case $x = n$. 
+	$\sset{n}{\Seq{1}{n}} = \Seq{n}{n}$.
+	Define $h(x) = 1$ for $x \in \Seq{n}{n}$. 
+	$h$ is a bijection between $\Seq{n}{n}$ and $\Seq{1}{1}$. 
+	Qed.
+	
+	Case $x \neq n$.
+	$x < n$.
+	Let $m$ be natural number such that $m = n-1$.
+	$m$ is inductively smaller than $n$.
+	Then $x \leq m$ and $x \in \Seq{1}{m}$.
+	Then $\sset{x}{\Seq{1}{m}}$ is finite and $|\sset{x}{\Seq{1}{m}}|=1$.
+	$\sset{x}{\Seq{1}{m}}=\sset{x}{\Seq{1}{n}}$.
+	Qed.
+	
+	Qed.
+\end{proof}
+
+\begin{lemma}
+	Let $A$ be a set. Let $a\in A$. Then $\sset{a}{A}$ is finite and $| \sset{a}{A} | = 1$.
+\end{lemma}
+\begin{proof}
+	Define $f(x) = 1$ for $x \in \sset{a}{A}$.
+	$f$ is a map from $\sset{a}{A}$ to $\Seq{1}{1}$.
+	$f$ is a surjection from $\sset{a}{A}$ onto $\Seq{1}{1}$.
+	$f$ is injective.
+	Thus $f$ is a bijection between $\sset{a}{A}$ and $\Seq{1}{1}$.
+\end{proof}
+
+\end{forthel}
+%
+We now prove that every subset of a finite set is finite.
+%
+\begin{forthel}
+
+\begin{lemma}
+	For all sets $A$ and all natural numbers $n$ if $A \subseteq \Seq{1}{n}$ then $A$ is finite.
+\end{lemma}
+
+\begin{proof}[by induction on $n$]
+	Let $A$ be a set and $n$ be a natural number such that $A \subseteq \Seq{1}{n}$.
+	
+	Case $n=0$. Then $\Seq{1}{0} = \emptyset$. Qed.
+	
+	Case $n \neq 0$. Take a natural number $m$ such that $m+1=n$. 
+	Then $m$ is inductively smaller than $n$. 
+	
+	$\Seq{1}{n} = \Seq{1}{m} \cup (\Seq{1}{n} \setminus \Seq{1}{m})$.\\
+	$A = (A \cap \Seq{1}{m}) \cup (A\cap (\Seq{1}{n} \setminus \Seq{1}{m}))$.\\
+	$(A \cap \Seq{1}{m}) \subseteq \Seq{1}{m}$.\\
+	$A \cap \Seq{1}{m}$ is finite.
+	
+	Let us show that $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ is finite.
+	
+	$\Seq{1}{n} \setminus \Seq{1}{m} = \Seq{1}{m+1} \setminus \Seq{1}{m}$.\\
+	Thus $x \in \Seq{1}{m+1} \setminus \Seq{1}{m}$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.\\
+	Therefore $x = m+1$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.\\
+	Thus $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) \subseteq \sset{m+1}{\Seq{1}{m+1}}$.
+	
+	Case $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$. Trivial.
+	
+	Case not $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$.
+	Then $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \sset{m+1}{\Seq{1}{m+1}}$.
+	$\sset{m+1}{\Seq{1}{m+1}}$ is finite.
+	Qed.
+	
+	Qed.
+	
+	$A \cap \Seq{1}{m}$ and $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ are disjoint.
+	Therefore $A$ is finite.
+	Qed.
+\end{proof}
+
+\begin{lemma}
+	Let $A$ be a set and $B$ be a finite set such that $A \subseteq B$.
+	$A$ is finite.
+\end{lemma}
+\begin{proof}
+	Take a natural number $n$ such that $B$ and $\Seq{1}{n}$ are equinumerous.
+	Take a bijection $f$ between $B$ and $\Seq{1}{n}$.
+	Then $f[A]$ is a subset of $\Seq{1}{n}$.
+	$f[A]$ is finite.
+	Define $g(x) = f(x)$ for $x\in A$.
+	$g$ is a map from $A$ to $f[A]$.
+	$g$ is injective.
+	$g$ is a surjection from $A$ onto $f[A]$.
+	Thus $g$ is a bijection between $A$ and $f[A]$.
+	Therefore $A$ and $f[A]$ are equinumerous and $A$ is finite.
+\end{proof}
+
+\begin{lemma}
+	For all nonzero natural numbers $n$ and all finite sets $A, B$
+	if $B \subseteq A$ and $|A| = n$ and $A \neq B$
+	then $|B| < |A|$.
+\end{lemma}
+\begin{proof}
+	Let $n$ be nonzero natural number.
+	Let $A,B$ be finite sets such that 
+	$B \subseteq A$ and $|A|=n$ and $A \neq B$.
+	If $A \neq B$ and $B \subseteq A$ then
+	$A \setminus B$ is nonempty.
+	$A \setminus B \subseteq A$.
+	$A \setminus B$ is finite.
+	$A \setminus B$ and $B$ are disjoint.
+	$A = (A \setminus B) \cup B$.
+	Then $|A| = |(A \setminus B)| + |B|$.
+\end{proof}
+
+
+\end{forthel}
 
 \section{Factorial}
 
@@ -844,37 +984,5 @@ End.
 
 
 \end{forthel}
-
-
-
-\begin{thebibliography}{plain}
-
-\bibitem{Isabelle} The Isabelle Proof Assistant. \url{https://isabelle.in.tum.de/}
-
-\bibitem{Knaster}
-5B. Knaster. Un théorème sur les fonctions d'ensembles. With A. Tarski. 
-\textit{Ann. Soc. Polon. Math.} 6: 133–134, 1928.
-
-\bibitem{Naproche} The Naproche Natural Proof Checker. \url{https://naproche.github.io/}
-
-\bibitem{SAD} The SAD Proof Checker. \url{http://nevidal.org/sad.en.html}
-
-\bibitem{Rudin} Walter Rudin. \textit{Principles of Mathematical
-Analysis}. McGraw Hill, 1953.
-
-\bibitem{Russell} Bertrand Russell,
-{\em The Principles of Mathematics}, Cambridge 1903, {\S}100
-
-\bibitem{Schroeder2012} Bernd S. W. Schröder,
-\textit{The fixed point property for ordered sets};
-Springer, \textit{Arabian Journal of Mathematics}, vol. 1, p. 529--547
-
-\bibitem{Tarski}
-Alfred Tarski. A lattice-theoretical fixpoint theorem and its applications. 
-\textit{Pacific Journal of Mathematics}. 5:2: 285–309, 1955.
-
-\bibitem{Wiedijk} Freek Wiedijk. Formalizing 100 Theorems. \url{https://www.cs.ru.nl/~freek/100/}
-
-\end{thebibliography}
 
 \end{document}
