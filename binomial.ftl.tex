@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage[english]{babel}
-\usepackage{../lib/tex/naproche}
+\usepackage{../lib/tex/naproche} %<-- falls du lib in deinem Arbeitsverzeichnis hast
+%\usepackage{./lib/tex/naproche} falls du lib nicht in deinem Arbeitsverzeichnis hast
 \usepackage{amssymb}
 \usepackage{hyperref}
 
@@ -43,7 +44,7 @@ into two disjoint sets where one is the set of subsets which contain a fixed ele
 To use some facts about sets and numbers we load the file \textit{100\_theorems.ftl.tex}. We will prove any additionally needed statement on our way.
 \begin{forthel}
    [prove off][check off]
-   [readtex \path{100_theorem.ftl.tex}]
+   [readtex \path{100_theorems.ftl.tex}]
    [prove on][check on]
 \end{forthel}
 
