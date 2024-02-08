@@ -1,6 +1,6 @@
 \documentclass{article}
 \usepackage[english]{babel}
-\usepackage{../lib/tex/naproche}
+\usepackage{../../Isabelle2023/contrib/naproche-20230902/lib/tex/naproche}
 \usepackage{amssymb}
 
 \begin{document}
@@ -189,7 +189,6 @@ that classes are built and determined by their
 elements which are mathematical objects.
 
 \begin{forthel}
-
 \begin{proposition}
 Let $X$ be a class. Let $x$ be an element of $X$.
 Then $x$ is an object.
@@ -1549,6 +1548,7 @@ There is no integer $a$ such that $0 < a < 1$.
 But the discrete ring generates the rationals by fractions:
 %
 \begin{forthel}
+
 \begin{axiom} Let $p$ be a rational number. Then
 there exist integers $m, n$ such that
 $n \neq 0$ and $p = \frac{m}{n}$.
@@ -1563,12 +1563,24 @@ $\frac{m}{n} \in \mathbb{Q}$ where $m,n$ are integers and
 $n \neq 0$.
 \end{proof}
 [timelimit 3]
+
+\begin{lemma}[reduction of fractions]
+	Let $k,l,n$ be integers such that $l,n$ are nonzero.
+	Then $\frac{k}{l} = \frac{k\cdot n}{l \cdot n}$. 
+\end{lemma}
+
+\begin{lemma}
+	Let $l$,$m$ and $n$ be integers such that $n$ is nonzero.
+	Then $\frac{l}{n} + \frac{m}{n} = \frac{l + m}{n}$.
+\end{lemma}
+
 \end{forthel}
 %
 Although $\mathbb{Z}$ is a small, indeed countable subring
 of $\mathbb{R}$, it is somehow "large" in $\mathbb{R}$.
 %
 \begin{forthel}
+
 
 \begin{theorem}[Archimedes1]
 $\mathbb{Z}$ is not bounded above.
@@ -1604,6 +1616,7 @@ Assume the contrary.
 Then $x$ is an upper bound of $\mathbb{Z}$.
 Contradiction.
 \end{proof}
+
 
 \end{forthel}
 
@@ -2906,7 +2919,7 @@ Then $m1 \leq n1$ and $m \leq n$.
   Qed.
   \end{proof}
   
-  \begin{lemma}
+  \begin{lemma}[disjoint finite sets]
   Let $x,y$ be disjoint finite sets.
   Then $x \cup y$ is a finite set and $|x \cup y| = |x| + |y|$.
   \end{lemma}
@@ -2919,39 +2932,185 @@ Then $m1 \leq n1$ and $m \leq n$.
   $x \cup y \sim \Seq{1}{m} \cup \Seq{m+1}{m+n} = \Seq{1}{|x|+|y|}$. [timelimit 3]
   $x \cup y \sim \Seq{1}{|x|+|y|}$.
   \end{proof}
-  
-  
-  \begin{definition}
-  $S$ is infinite iff $S$ is not finite.
-  \end{definition}
-  
-  \begin{definition}
-  $S$ is denumerable iff $S$ and $\mathbb{N}$ are equinumerous.
-  \end{definition}
-  \end{forthel}
+
+\begin{lemma}
+	Let $X$ be a finite set.
+	$|X| = 0$ iff $X = \emptyset$.
+\end{lemma}
+\begin{proof}
+	Let us show that if $|X| = 0$ then $X = \emptyset$.
+	Assume $|X| = 0$ and there exists an $x \in X$.
+	Take $x \in X$ and bijection $g$ between $X$ and $\Seq{1}{0}$. Then $g(x) \in \Seq{1}{0} = \emptyset$. Contradiction. End.
+	
+	If $X = \emptyset$ then $|X| = 0$. 
+\end{proof}
+
+\begin{lemma}[nonempty set difference]
+	For all nonzero natural numbers $n$ and all finite sets $A,B$
+	if $A \neq B$ and $A \subseteq B$ and $|B| = n$ 
+	then $B \setminus A$ is nonempty.
+\end{lemma}
+\begin{proof}[by induction on $n$]
+	Let $n$ be a nonzero natural number.
+	Let $A,B$ be finite sets such that
+	$A \neq B$ and $A \subseteq B$ and $|B| = n$.
+	
+	Case $n=1$.
+	Trivial.
+	
+	Case $n > 1$.
+	Let $m$ be natural number such that $m = n-1$.
+	$m$ is inductively smaller than $n$.
+	QED.
+\end{proof}
+
+\end{forthel}
+
+%
+We will take a quick look at singleton sets.
+%
+\begin{forthel}
+	\begin{definition}
+		Let $Y$ be a nonempty set and $y \in Y$. 
+		$\sset{y}{Y}$ is $\{\nu \in Y \mid \nu=y \}$.
+	\end{definition}
+	
+	\begin{lemma}
+		For all natural numbers $n$
+		if $x \in \Seq{1}{n}$
+		then $\sset{x}{\Seq{1}{n}}$ is finite and $|\sset{x}{\Seq{1}{n}}| = 1$. 
+	\end{lemma}
+	\begin{proof}[by induction on $n$]
+		Let $n$ be a natural number.
+		
+		Case $n=0$. Trivial.
+		
+		Case $n > 0$. 
+		Let $x \in \Seq{1}{n}$. 
+		
+		Case $x = n$. 
+		$\sset{n}{\Seq{1}{n}} = \Seq{n}{n}$.
+		Define $h(x) = 1$ for $x \in \Seq{n}{n}$. 
+		$h$ is a bijection between $\Seq{n}{n}$ and $\Seq{1}{1}$. 
+		Qed.
+		
+		Case $x \neq n$.
+		$x < n$.
+		Let $m$ be natural number such that $m = n-1$.
+		$m$ is inductively smaller than $n$.
+		Then $x \leq m$ and $x \in \Seq{1}{m}$.
+		Then $\sset{x}{\Seq{1}{m}}$ is finite and $|\sset{x}{\Seq{1}{m}}|=1$.
+		$\sset{x}{\Seq{1}{m}}=\sset{x}{\Seq{1}{n}}$.
+		Qed.
+		
+		Qed.
+	\end{proof}
+	
+	\begin{lemma}
+		Let $A$ be a set. Let $a\in A$. Then $\sset{a}{A}$ is finite and $| \sset{a}{A} | = 1$.
+	\end{lemma}
+	\begin{proof}
+		Define $f(x) = 1$ for $x \in \sset{a}{A}$.
+		$f$ is a map from $\sset{a}{A}$ to $\Seq{1}{1}$.
+		$f$ is a surjection from $\sset{a}{A}$ onto $\Seq{1}{1}$.
+		$f$ is injective.
+		Thus $f$ is a bijection between $\sset{a}{A}$ and $\Seq{1}{1}$.
+	\end{proof}
+	
+\end{forthel}
+%
+We now prove that every subset of a finite set is finite.
+%
+\begin{forthel}
+	
+\begin{lemma}
+	For all sets $A$ and all natural numbers $n$ if $A \subseteq \Seq{1}{n}$ then $A$ is finite.
+\end{lemma}
+
+\begin{proof}[by induction on $n$]
+	Let $A$ be a set and $n$ be a natural number such that $A \subseteq \Seq{1}{n}$.
+	
+	Case $n=0$. Then $\Seq{1}{0} = \emptyset$. Qed.
+	
+	Case $n \neq 0$. Take a natural number $m$ such that $m+1=n$. 
+	Then $m$ is inductively smaller than $n$. 
+	
+	$\Seq{1}{n} = \Seq{1}{m} \cup (\Seq{1}{n} \setminus \Seq{1}{m})$.\\
+	$A = (A \cap \Seq{1}{m}) \cup (A\cap (\Seq{1}{n} \setminus \Seq{1}{m}))$.\\
+	$(A \cap \Seq{1}{m}) \subseteq \Seq{1}{m}$.\\
+	$A \cap \Seq{1}{m}$ is finite.
+	
+	Let us show that $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ is finite.
+	
+	$\Seq{1}{n} \setminus \Seq{1}{m} = \Seq{1}{m+1} \setminus \Seq{1}{m}$.\\
+	Thus $x \in \Seq{1}{m+1} \setminus \Seq{1}{m}$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.\\
+	Therefore $x = m+1$ for every $x \in A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$.\\
+	Thus $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) \subseteq \sset{m+1}{\Seq{1}{m+1}}$.
+	
+	Case $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$. Trivial.
+	
+	Case not $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \emptyset$.
+	Then $A\cap (\Seq{1}{n} \setminus \Seq{1}{m}) = \sset{m+1}{\Seq{1}{m+1}}$.
+	$\sset{m+1}{\Seq{1}{m+1}}$ is finite.
+	Qed.
+	
+	Qed.
+	
+	$A \cap \Seq{1}{m}$ and $A\cap (\Seq{1}{n} \setminus \Seq{1}{m})$ are disjoint.
+	Therefore $A$ is finite.
+	Qed.
+\end{proof}
+
+\begin{lemma}
+	Let $A$ be a set and $B$ be a finite set such that $A \subseteq B$.
+	$A$ is finite.
+\end{lemma}
+\begin{proof}
+	Take a natural number $n$ such that $B$ and $\Seq{1}{n}$ are equinumerous.
+	Take a bijection $f$ between $B$ and $\Seq{1}{n}$.
+	Then $f[A]$ is a subset of $\Seq{1}{n}$.
+	$f[A]$ is finite.
+	Define $g(x) = f(x)$ for $x\in A$.
+	$g$ is a map from $A$ to $f[A]$.
+	$g$ is injective.
+	$g$ is a surjection from $A$ onto $f[A]$.
+	Thus $g$ is a bijection between $A$ and $f[A]$.
+	Therefore $A$ and $f[A]$ are equinumerous and $A$ is finite.
+\end{proof}
+
+\begin{lemma}
+	For all nonzero natural numbers $n$ and all finite sets $A, B$
+	if $B \subseteq A$ and $|A| = n$ and $A \neq B$
+	then $|B| < |A|$.
+\end{lemma}
+\begin{proof}
+	Let $n$ be nonzero natural number.
+	Let $A,B$ be finite sets such that 
+	$B \subseteq A$ and $|A|=n$ and $A \neq B$.
+	If $A \neq B$ and $B \subseteq A$ then
+	$A \setminus B$ is nonempty.
+	$A \setminus B \subseteq A$.
+	$A \setminus B$ is finite.
+	$A \setminus B$ and $B$ are disjoint.
+	$A = (A \setminus B) \cup B$.
+	Then $|A| = |(A \setminus B)| + |B|$.
+\end{proof}
+
+\begin{definition}
+	$S$ is infinite iff $S$ is not finite.
+\end{definition}
+
+\begin{definition}
+	$S$ is denumerable iff $S$ and $\mathbb{N}$ are equinumerous.
+\end{definition}
+
+\end{forthel}
+
 
 
   \section{Number of Subsets of a Set (\#52)}
   
   \begin{forthel}
-  
-  \begin{lemma}
-  Let $X$ be a finite set.
-  $|X| = 0$ iff $X = \emptyset$.
-  \end{lemma}
-  \begin{proof}
-  Let us show that if $|X| = 0$ then $X = \emptyset$.
-    Assume $|X| = 0$ and there exists an $x \in X$.
-    Take $x \in X$ and bijection $g$ between $X$ and $\Seq{1}{0}$. Then $g(x) \in \Seq{1}{0} = \emptyset$. Contradiction. End.
-  
-  If $X = \emptyset$ then $|X| = 0$. 
-  \end{proof}
-  
-  
-  \begin{definition}
-  Let $Y$ be a nonempty set and $y \in Y$. 
-  $\sset{y}{Y}$ is $\{\nu \in Y \mid \nu=y \}$.
-  \end{definition}
   
   \begin{theorem}
   For all finite sets $X$ and all natural numbers $n$ if $|X| = n$ then
@@ -3102,12 +3261,814 @@ Contradiction. qed.
 \end{proof}
 \end{forthel}
 
+\section{Factorial}
+
+\begin{forthel}
+
+Let $n$ denote a natural number.
+\begin{signature}
+$n!$ is a natural number.
+\end{signature}
+
+\begin{axiom}
+$0!=1$.
+\end{axiom}
+
+\begin{axiom}
+$(n+1)!=(n!) \cdot (n+1)$.
+\end{axiom}
+
+\begin{lemma}
+Let $k,n$ be nonzero natural numbers. $k \cdot n \neq 0$. 
+\end{lemma}
+
+\begin{theorem}
+For every natural number $k$ $k! \neq 0$.
+\end{theorem}
+\begin{proof}[by induction on $k$]
+Let $k$ be a natural number.
+
+Case $k = 0$.Then $k! = 1$. Thus $k! \neq 0$. Qed.
+
+Case $k = 1$. Then $k! = 1 \neq 0$. Qed.
+
+Case $k > 1$. $k = (k-1)+1$. $(k-1)! \neq 0$. $k \neq 0$. Then $k, (k-1)!$ are nonzero natural numbers.
+Then $(k \cdot (k-1)!) \neq 0$. Thus $k! \neq 0$.  Qed.
+\end{proof} 
+
+\end{forthel}
+
+\section{Binomial coefficients}
+
+\begin{forthel}
+
+Let $n, k$ denote natural numbers.
+\begin{signature}
+$\binom{n}{k}$ is a natural number.
+\end{signature}
+
+
+\begin{axiom}
+Let $k > n$. $\binom{n}{k} = 0$.
+\end{axiom}
+    
+\begin{axiom}[definition binomial coefficient]
+Let $k \leq n$. $\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
+\end{axiom}
+
+\begin{lemma}
+$\binom{0}{0} = 1$.
+\end{lemma}
+\begin{proof}
+$0! = 1$.
+$0$ is a natural number and $0 \leq 0$.
+Take natural numbers $n,k$ such that $n=k=0$ and $k\leq n$.
+$\binom{0}{0} = \binom{n}{k} = \frac{n!}{k! \cdot (n-k)!} = 
+\frac{0!}{0! \cdot (0-0)!} = \frac{1}{1 \cdot 1} = 1$
+(by definition binomial coefficient).
+\end{proof}
+
+
+\begin{theorem}
+Let $k,n$ be natural numbers such that $1 < k < n$.
+$\binom{n}{k} > 0$. 
+\end{theorem}
+\begin{proof}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Then $n! > 0$ and $k! > 0$ and $(n-k)! > 0$. 
+Then $\frac{n!}{k! \cdot (n-k)!} > 0$. 
+Then $\binom{n}{k} > 0$. 
+\end{proof}
+
+\begin{lemma}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+Then $n-(k-1)$ is a natural number.
+\end{lemma}
+\begin{proof}
+$k-1$ is a natural number. $k-1 < k < n$. $k-1 \leq n$.
+\end{proof}
+  
+\begin{lemma}
+Let $n,k$ be nonzero natural numbers such that $1 < k < n$.
+$n-(k-1) = (n-k)+1$.
+\end{lemma}
+  
+\begin{theorem}[Binomial Sum]
+Let $n,k$ be nonzero natural numbers such that $1 < k \leq n$.
+Then $\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}$.
+\end{theorem}
+\begin{proof}
+	
+Let us show that
+$\binom{n}{k} + \binom{n}{k-1} = \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
+
+$k \leq n$.
+$k-1 \leq k \leq n$.
+$k-1 \leq n$.
+
+Indeed we can show that $k-1 \leq n$.
+
+Case $k = n$. Trivial.
+
+Case $k < n$. Trivial.
+
+End.
+
+$\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}$.
+
+$\binom{n}{k-1} = \frac{n!}{(k-1)! \cdot (n-(k-1))!}$.
+
+Qed.
+\\
+ 
+Let us show that \\
+$\frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!} = 
+\frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}$.
+
+$n!$, $k! \cdot (n-k)!$ and $(n-k)+1$ are natural numbers.
+$k! \cdot (n-k)!$ and $(n-k)+1$ are nonzero.
+
+Take a nonzero natural number $l$ such that $l = k! \cdot (n-k)!$.
+Take a nonzero natural number $m$ such that $m = (n-k)+1$.
+
+Then $\frac{n!}{(k! \cdot (n-k)!)} = \frac{n!}{l} = \frac{n! \cdot m}{l \cdot m} = 
+\frac{n! \cdot ((n-k)+1)}{l \cdot ((n-k)+1) } =  \frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) }$.
+
+$n-(k-1) = (n-k) +1$.
+$n!$, $(k-1)! \cdot (n-(k-1))!$ and $k$ are natural numbers.
+$(k-1)! \cdot (n-(k-1))!$ and $k$ are nonzero.
+
+Take a nonzero natural number $o$ such that $o = (k-1)! \cdot (n-(k-1))!$.
+Then $o = (k-1)! \cdot ((n-k)+1)!$.
+
+[timelimit 10]
+Therefore $\frac{n!}{(k-1)! \cdot (n-(k-1))!} = \frac{n!}{o} = \frac{n! \cdot k}{o \cdot k}
+= \frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}$ (by reduction of fractions).
+[timelimit 3]
+
+Qed.
+\\
+  
+Let us show that 
+
+$\frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k} = 
+\frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!}$.
+
+$(n-k)! \cdot ((n-k)+1) = ((n-k)+1)!$. \\
+$(k! \cdot (n-k)!) \cdot ((n-k)+1) = k! \cdot ((n-k)+1)!$. \\
+$(k-1) + 1 = k$.
+$(k-1)! \cdot k = k!$.
+
+Take natural numbers $l,m$ such that $l = (k-1)!$ and $m = ((n-k)+1)!$.
+$((k-1)! \cdot ((n-k)+1)!) \cdot k = 
+(l \cdot m) \cdot k =
+(l \cdot k) \cdot m =
+((k-1)! \cdot k) \cdot ((n-k)+1)! = k! \cdot ((n-k)+1)!$.
+
+Qed.
+\\
+  
+Let us show that 
+$\frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!} = 
+\frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}$.
+
+$n! \cdot ((n-k)+1)$, $n! \cdot k$ and $k! \cdot ((n-k)+1)!$ are natural numbers.
+$k! \cdot ((n-k)+1)!$ is nonzero.
+
+Qed.
+\\
+
+Let us show that
+$ \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}
+= \frac{(n+1)!}{k! \cdot ((n-k)+1)!}$.
+
+$(((n-k)+1)+k) = n+1$.
+$(n! \cdot ((n-k)+1)) + (n! \cdot k) = n! \cdot (((n-k)+1)+k) =  n! \cdot (n+1) = (n+1)!$.
+
+Qed.
+\\
+
+$k! \cdot ((n+1)+(-k))!$ is nonzero.
+
+Let us show that $ \frac{(n+1)!}{k! \cdot ((n-k)+1)!}
+= \frac{(n+1)!}{k! \cdot ((n+1)+(-k))!}$.
+
+$((n-k)+1)=(n+1)+(-k)$.
+
+Qed.
+\\
+
+[timelimit 11]
+Let us show that $\frac{(n+1)!}{k! \cdot ((n+1)+(-k))!} = \binom{n+1}{k}$.
+
+$k \leq (n+1)$.
+
+Qed.
+[timelimit 3]\\
+
+$(n+1)+(-k)$ is a natural number.
+
+Therefore 
+$\binom{n}{k} + \binom{n}{k-1}
+= \frac{n!}{k! \cdot (n-k)!} + \frac{n!}{(k-1)! \cdot (n-(k-1))!}
+= \frac{n! \cdot ((n-k)+1)}{(k! \cdot (n-k)!) \cdot ((n-k)+1) } + 
+\frac{n! \cdot k}{((k-1)! \cdot ((n-k)+1)!) \cdot k}
+= \frac{n! \cdot ((n-k)+1)}{k! \cdot ((n-k)+1)! } + 
+\frac{n! \cdot k}{k! \cdot ((n-k)+1)!}
+= \frac{(n! \cdot ((n-k)+1)) + (n! \cdot k)}{k! \cdot ((n-k)+1)!}
+= \frac{(n+1)!}{k! \cdot ((n-k)+1)!}
+= \frac{(n+1)!}{k! \cdot ((n+1)+(-k))!}
+= \binom{n+1}{k}$.
+\end{proof}
+
+\begin{lemma}
+$\binom{n}{n} = 1$ for all nonzero natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be a nonzero natural number.
+$n \leq n.$
+$n! \cdot (n-n)! \neq 0$.
+$\binom{n}{n} = \frac{n!}{n! \cdot (n-n)!}$.
+$n! \cdot (n-n)! = n!$.
+$\frac{n!}{n! \cdot (n-n)!} = \frac{n!}{n!} = 1$.
+\end{proof}
+
+
+\begin{lemma}
+Let $n,k$ be nonzero natural numbers such that $1 < k \leq n$.
+Then $\binom{n-1}{k} + \binom{n-1}{k-1} = \binom{n}{k}$.
+\end{lemma}
+\begin{proof}
+Case $k = n$.
+Then $1 < k \leq n$.
+Therefore $\binom{n}{k} + \binom{n}{k-1} = \binom{n+1}{k}$.
+Qed.
+Case $k = 1$. Trivial.
+Case $1 < k < n$.
+Let $m,l$ be nonzero natural numbers 
+such that $1 < l \leq m$ and $m+1 =n$ and $l = k$.
+Then $\binom{m}{l} + \binom{m}{l-1} = \binom{m+1}{l}$.
+Qed.
+\end{proof}
+
+\begin{lemma}
+$\binom{n}{0}=1$ for all natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be a natural number.
+$\binom{n}{0} 
+= \frac{n!}{0! \cdot (n-0)!} 
+= \frac{1 \cdot n!}{1 \cdot n!} 
+= 1$.
+\end{proof}
+
+\begin{lemma}
+$\binom{n}{1}=n$ for all nonzero natural numbers $n$.
+\end{lemma}
+\begin{proof}
+Let $n$ be a nonzero natural number.
+$1! \cdot (n-1)! \neq 0$.
+$1 \leq n$.
+$\binom{n}{1} = \frac{n!}{1! \cdot (n-1)!}$.
+$(n-1)! \neq 0$.
+$((n-1)+1)! = (n-1)! \cdot ((n-1)+1)$.
+$(n-1)+1 = n$.
+$\frac{n!}{1! \cdot (n-1)!} 
+= \frac{n \cdot (n-1)!}{1 \cdot (n-1)!}$.
+$\frac{n \cdot (n-1)!}{1 \cdot (n-1)!}
+= \frac{n}{1}$.
+\end{proof}
+
+\end{forthel}
+
+\section{Formula for the Number of Combinations (\#58)}
+
+We firstly introduce some notation to shorten the statements.
+\begin{forthel}
+
+\begin{signature}
+$P_{n,k}$ is a set.
+\end{signature}
+
+\begin{axiom}[subsets of specific cardinality 1]
+Let $n,k$ be natural numbers. \\
+$P_{n,k} = \{ x | x \subseteq \Seq{1}{n}$ and $|x|=k \}$.
+\end{axiom}
+
+\begin{lemma}
+Let $n,k$ be natural numbers such that $k>n$.
+$P_{n,k} = \emptyset$.
+\end{lemma}
+\begin{proof}[by contradiction]
+Assume $P_{n,k}$ is nonempty.
+Take $x \in P_{n,k}$.
+Then $x \subseteq \Seq{1}{n}$.
+$|x|=k$.
+$|x| \geq |\Seq{1}{n}|$. Contradiction.
+\end{proof}
+
+\begin{lemma}
+$P_{0,0}$ is finite and $|P_{0,0}|=1$.
+\end{lemma}
+\begin{proof}
+$|\emptyset|=0$.
+$\emptyset \subseteq \Seq{1}{0}$.
+Thus $\emptyset \in P_{0,0}$.
+Define $h(x)=1$ for $x \in P_{0,0}$.
+$h$ is bijection between $P_{0,0}$ and $\Seq{1}{1}$.
+\end{proof}
+
+\begin{lemma}
+Let $n$ be a natural number.
+$P_{n,n}$ is finite and $|P_{n,n}|=1$.
+\end{lemma}
+\begin{proof}
+$\Seq{1}{n} \subseteq \Seq{1}{n}$.
+$\Seq{1}{n} \in P_{n,n}$.
+$P_{n,n} \setminus \sset{\Seq{1}{n}}{P_{n,n}} = \emptyset$.
+$P_{n,n} = \sset{\Seq{1}{n}}{P_{n,n}} \cup \emptyset$.
+$\sset{\Seq{1}{n}}{P_{n,n}}$ and $\emptyset$ are disjoint.\\
+$|\sset{\Seq{1}{n}}{P_{n,n}}|=1$.
+\end{proof}
+
+\end{forthel}
+%
+Now we show the desired theorem for the simpler sets $\Seq{1}{n}$.
+%
+\begin{forthel}
+\begin{theorem}
+For all natural numbers $n,k$  $P_{n,k}$ is finite and $|P_{n,k}|= \binom{n}{k}$.
+\end{theorem}
+\begin{proof}[by Induction on $n$]
+Let $n,k$ be natural numbers.
+
+Case $n < k$. Trivial.
+
+Case $n = k$. Trivial.
+
+Case $k < n$.
+
+Case $n=0$.Trivial.
+
+Case $n>0$.
+
+Case $k=0$.
+For all $x \in P_{n,k}$ $|x| = 0$.
+Therefore $x = \emptyset$ for all $x \in P_{n,k}$.
+$\emptyset \subseteq \Seq{1}{n}$. Thus $\emptyset \in P_{n,k}$.
+Define $h(x) = 1$ for $x \in P_{n,k}$. 
+[timelimit 10]
+$h$ is a bijection between $P_{n,k}$ and $\Seq{1}{1}$.
+[timelimit 3]
+Hence $|P_{n,k}| = 1$ and $\binom{n}{k} = 1$.
+Qed.
+
+Case $k>0$.
+Let $m$ be a natural number such that $m+1=n$.
+$m$ is inductively smaller than $n$.
+$|P_{m,k}|=\binom{m}{k}$.
+$|P_{m,k-1}|=\binom{m}{k-1}$.
+$n \in \Seq{1}{n}$.
+$k \leq m$.
+
+Define $P' = \{p| p \in P_{n,k}$ and $n \in p\}$.
+$P' \subseteq P_{n,k}$. 
+
+
+$\Seq{1}{k} \subseteq \Seq{1}{m}$.
+$\Seq{1}{k} \in P_{m,k}$.
+$P_{m,k}$ is nonempty.
+
+Let us show that $P_{m,k} \subseteq P_{n,k}$.
+$|x|=k$ for all $x \in P_{m,k}$.
+$x \subseteq \Seq{1}{m}$ for all $x \in P_{m,k}$.
+$x \subseteq \Seq{1}{n}$ for all $x \in P_{m,k}$.
+$x \in P_{n,k}$ for all $x \in P_{m,k}$(by subsets of specific cardinality 1).
+Qed.
+
+$P_{n,k}$ is nonempty.
+
+Let us show that $p \in (P' \cup P_{m,k})$ for all $p \in P_{n,k}$.
+Let $p \in P_{n,k}$.
+
+Case $n \in p$.
+$p \in P'$. End.
+
+Case $n \notin p$.
+$p \subseteq \Seq{1}{m}$.
+$\Seq{1}{m} \subseteq \Seq{1}{n}$.
+End.
+
+Qed.
+
+$P' \cup P_{m,k} = P_{n,k}$.
+$P'$ and $P_{m,k}$ are disjoint.
+$P_{n,k} \subseteq \pow(\Seq{1}{n})$.
+$P_{n,k}$ is finite.
+$P'$ is finite.
+$|P_{n,k}|=|P'|+|P_{m,k}|$.
+
+Let us show that $|P'|=|P_{m,k-1}|$.
+
+$P' = \{p| p \in P_{n,k}$ and $n \in p\}$. 
+$0 < k \leq n$.
+
+$p \subseteq \Seq{1}{m}$ for every $p \in P_{m,k-1}$.
+$p \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$p \cup \sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$p \cup \sset{n}{\Seq{1}{n}}$ is a set for every $p \in P_{m,k-1}$.
+
+Define $f(p) = p \cup \sset{n}{\Seq{1}{n}}$ for $p \in P_{m,k-1}$.
+
+Let us show that $f$ is a map from $P_{m,k-1}$ to $P'$.
+
+$p$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $p \in P_{m,k-1}$.
+$|p| = k-1$ for every $p \in P_{m,k-1}$.
+$|\sset{n}{\Seq{1}{n}}| = 1$.
+$|f(p)| = |p \cup \sset{n}{\Seq{1}{n}}| = |p| + |\sset{n}{\Seq{1}{n}}| = (k-1)+1  = k$ for every $p \in P_{m,k-1}$.
+
+$p \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$\sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$.
+$p \cup \sset{n}{\Seq{1}{n}} \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+$f(p) \subseteq \Seq{1}{n}$ for every $p \in P_{m,k-1}$.
+
+$P_{n,k} = \{ x | x \subseteq \Seq{1}{n}$ and $|x|=k \}$.
+For all $p \in P_{m,k-1}$  $|f(p)| = k$ and $f(p) \subseteq \Seq{1}{n}$
+.
+$f(p) \in P_{n,k}$ for every $p \in P_{m,k-1}$.
+$n \in f(p)$ for every $p \in P_{m,k-1}$.
+$f(p) \in P'$ for every $p \in P_{m,k-1}$.
+Qed.
+
+Let us show that $f$ is injective. 
+
+   Let $p,q \in P_{m,k-1}$.
+   Assume $f(p) = f(q)$. \\
+   We have $f(r) \setminus \sset{n}{\Seq{1}{n}} = (r \cup \sset{n}{\Seq{1}{n}}) \setminus \sset{n}{\Seq{1}{n}} = r$
+   for every $r \in  P_{m,k-1}$.
+   $p = f(p)\setminus \sset{n}{\Seq{1}{n}} = f(q)\setminus \sset{n}{\Seq{1}{n}} = q$.
+   Thus $p=q$.
+   Qed.
+   
+Let us show that $f$ is a surjection from $P_{m,k-1}$ onto $P'$.
+
+   Define $p(q) = q \setminus \sset{n}{\Seq{1}{n}}$ for $q \in P'$.
+   $p(q)$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $q \in P'$.
+   $q \subseteq \Seq{1}{n}$ for every $q \in P'$.
+   $q$ is finite for every $q \in P'$.
+   $\sset{n}{\Seq{1}{n}}$ is finite.
+   $p(q) \subseteq q$ for every $q \in P'$.
+   Thus $p(q)$ is finite for every $q \in P'$.
+   
+   $p(q) \cup \sset{n}{\Seq{1}{n}} = q$ for every $q \in P'$.
+   $p(q)$ and $\sset{n}{\Seq{1}{n}}$ are disjoint for every $q\in P'$.
+   $|q| = |p(q) \cup \sset{n}{\Seq{1}{n}}|  =  |p(q)| + |\sset{n}{\Seq{1}{n}}|$ for every $q \in P'$.
+   Therefore $k = |q| = |p(q)| + |\sset{n}{\Seq{1}{n}}| = |p(q)| + 1$ for every $q \in P'$.
+   $k =  |p(q)| + 1$ for every $q \in P'$.
+   Thus $|p(q)| = (|p(q)| + 1) -1 =  k-1$ for every $q \in P'$.
+   
+   $\Seq{n}{n} = \sset{n}{\Seq{1}{n}}$.
+   $\Seq{1}{n-1} = \Seq{1}{m}$.\\
+   $\Seq{1}{n} = \Seq{1}{n-1} \cup \Seq{n}{n} = \Seq{1}{m} \cup  \sset{n}{\Seq{1}{n}}$.\\
+   $\Seq{1}{m} = \Seq{1}{n} \setminus \sset{n}{\Seq{1}{n}}$.
+   $p(q) \subseteq \Seq{1}{m}$ for every $q \in P'$.
+   For all $q \in P'$ $p(q) \subseteq \Seq{1}{m}$ and $|p(q)| = k-1$.\\
+   $P_{m,k-1} = \{x | x \subseteq  \Seq{1}{m}$ and $|x| = k-1 \}$.
+   $p(q) \in P_{m,k-1}$ for every $q \in P'$.
+   $f(p(q)) = p(q) \cup  \sset{n}{\Seq{1}{n}} = q$ for every $q \in P'$.
+   Thus $q \in f[P_{m,k-1}]$ for every $q \in P'$.
+   Qed.
+   
+Therefore $f$ is a bijection between $P_{m,k-1}$ and $P'$.
+Thus $P_{m,k-1}$ and $P'$ are equinumerous.
+
+Let us show that $P_{m,k-1}$ is finite.
+  $P_{m,k-1} \subseteq \pow(\Seq{1}{m})$.
+  $\pow(\Seq{1}{m})$ is finite.
+  Qed.
+  
+$n-1 = m$.
+$P_{n-1,k-1} = P_{m,k-1}$.
+$P_{m,k-1}$, $P_{n-1,k-1}$ and $P'$ are finite.
+
+For all sets $S,T$ if $S,T$ are finite and equinumerous then $|S|= |T|$.
+Therefore $|P_{n-1,k-1}| = |P_{m,k-1}| = |P'|$.
+$|P'| = |P_{n-1,k-1}|$.
+
+Qed.
+
+$|P_{m,k}|=\binom{n-1}{k}$.
+$|P_{m,k-1}|=\binom{n-1}{k-1}$.
+$|P'|=\binom{n-1}{k-1}$.
+$\binom{n}{k}=\binom{n-1}{k-1} + \binom{n-1}{k}$.
+$|P_{n,k}|=\binom{n}{k}$.
+
+Qed.
+Qed.
+Qed.
+\end{proof}
+\end{forthel}
+%
+We introduce some more notation.
+%
+\begin{forthel}
+
+
+\begin{signature}
+Let $X$ be a finite set such that $|X| = n$  and $n,k$ be natural numbers.
+$P_{X,n,k}$ is a set.
+\end{signature} 
+
+\begin{axiom}[subsets of specific cardinality 2]
+Let $X$ be a finite set such that $|X| = n$  and $n,k$ be natural numbers.\\
+$P_{X,n,k} = \{y|y$ is a finite set such that $y \subseteq X$ and $|y| = k\}$.
+\end{axiom}
+
+\begin{lemma}
+Let $n,k$ be natural numbers such that $k \leq n$.\\
+$P_{\Seq{1}{n},n,k}=P_{n,k}$.
+\end{lemma}
+\begin{proof}
+$P_{n,k} = \{ x | x \subseteq \Seq{1}{n} and |x|=k \}$.
+Let $X$ be a finite set such that $|X| = n$.
+[timelimit 20]
+$P_{X,n,k} = \{y|y$ is a finite set such that $y \subseteq X$ and $|y| = k\}$ (by subsets of specific cardinality 2).
+[timelimit 3]
+\end{proof}
+
+\begin{lemma}
+Let $n,k$ be natural numbers such that $k \leq n$.
+$|P_{\Seq{1}{n},n,k}|=|P_{n,k}|$.
+\end{lemma}
+
+\begin{lemma}
+Let $X$ be finite set such that $|X|=0$.
+$\emptyset \in P_{X,0,0}$.
+\end{lemma}
+\begin{proof}
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. $|\emptyset|=0$. $\emptyset$ is finite.
+$P_{X,0,0} = \{y | y$ is finite set such that $y \subseteq X$ and $|y| = 0\}$ (by subsets of specific cardinality 2).
+\end{proof}
+
+\begin{lemma}
+Let $n,k$ be natural numbers such that $k>n$. Let $X$ be a finite set such that $|X| = n$.
+$P_{X,n,k} = \emptyset$.
+\end{lemma}
+\begin{proof}[by contradiction]
+Assume $P_{X,n,k}$ is nonempty.
+Take $x \in P_{X,n,k}$.
+$P_{X,n,k} = \{y|y$ is a finite set such that $y \subseteq X$ and $|y| = k\}$ (by subsets of specific cardinality 2).
+Then $x \subseteq X$.
+$|x|=k$.
+$|x| \geq |\Seq{1}{n}|$. Contradiction.
+\end{proof}
+
+\end{forthel}
+%
+We can now move on to show the actual theorem.
+%
+\begin{forthel}
+\begin{lemma}
+Let $n,k$ be natural number such that $k \leq n$.
+Let $X$ be a finite set such that $|X|=n$.
+Then $P_{X,n,k}$ and $P_{n,k}$ are finite and $|P_{X,n,k}|=|P_{n,k}|$.
+\end{lemma}
+\begin{proof}
+	
+Case $n=0$.
+$k \leq n$.
+$k \leq 0$.
+$k = 0$.
+$\binom{0}{0} = 1$.
+$\Seq{1}{0} = \emptyset$.
+Thus $X = \emptyset$.
+$\emptyset \subseteq X$. $|\emptyset|=k$.
+
+[timelimit 20]
+$P_{X,n,k} = \{y | y$ is finite set such that $y \subseteq X$ and $|y| = k\}$ (by subsets of specific cardinality 2).
+[timelimit 3]
+
+Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
+$Y = \emptyset$ for all finite sets $Y$ such that $|Y|=0$.
+$|Y|=0$ for all $Y \in P_{X,n,k}$.
+$h$ is injective.
+$h(\emptyset) = 1$.
+$h$ is a surjection from $P_{X,n,k}$ onto $\Seq{1}{1}$.
+$h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
+Hence $|P_{X,n,k}| = 1$ and $|P_{n,k}| = 1$. End.
+
+Case $n>0$.
+
+Case $k=0$.
+$|X| = n$.
+$\emptyset \subseteq X$. $|\emptyset|=k$.
+$P_{X,n,k} = \{y | y$ is finite set such that $y \subseteq X$ and $|y| = k\}$ (by subsets of specific cardinality 2).
+Thus $\emptyset \in P_{X,n,k}$.
+Define $h(x) = 1$ for $x \in P_{X,n,k}$. 
+$Y = \emptyset$ for all finite sets $Y$ such that $|Y|=0$.
+$|Y|=0$ for all $Y \in P_{X,n,k}$.
+$h$ is injective.
+$h(\emptyset) = 1$.
+$h$ is a surjection from $P_{X,n,k}$ onto $\Seq{1}{1}$.
+$h$ is a bijection between $P_{X,n,k}$ and $\Seq{1}{1}$.
+Hence $|P_{X,n,k}| = 1$ and $|P_{n,k}| = 1$. End.
+
+
+Case $k>0$.
+
+$\Seq{1}{k} \subseteq \Seq{1}{n}$.
+$|\Seq{1}{k}|=k$.\\
+$\Seq{1}{k} \in P_{\Seq{1}{n},n,k}$.
+$P_{\Seq{1}{n},n,k}$ is nonempty.
+Take a bijection $f$ between $\Seq{1}{n}$ and $X$.
+$f[\Seq{1}{k}] \subseteq X$.
+
+(1) For all sets $a,b$ and all maps $g$ from $a$ to $b$ if $b = g[a]$ then $g$ is a surjection from $a$ onto $b$.
+
+$x \subseteq \Seq{1}{n}$ for every $x \in P_{\Seq{1}{n},n,k}$.
+
+Define $F(x)=f[x]$ for $x \in P_{\Seq{1}{n},n,k}$.
+
+$f \upharpoonright x$ is injective for all $x \in P_{\Seq{1}{n},n,k}$.
+
+Let us show that $f \upharpoonright x$ is a surjection from $x$ onto $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$ (by 1).
+Let $x \in P_{\Seq{1}{n},n,k}$.
+Let $g=(f \upharpoonright x)$.
+$\dom(f \upharpoonright x) = \dom(f) \cap x$.
+$x \subseteq \Seq{1}{n}$.
+$x \subseteq \dom(f)$.
+$\dom(f) \cap x = x$.
+$\dom(f \upharpoonright x) = x$.
+$\dom(f \upharpoonright x) = \dom(g)$.
+
+Let us show that $f[x] = g[x]$.
+$f(x') \in f[x]$ for all $x' \in x$.
+$((f \upharpoonright x)[x]) \subseteq f[x]$.
+$g[x] \subseteq f[x]$.
+Qed.
+
+$g$ is a surjection from $x$ onto $g[x]$ (by 1).
+Qed.
+
+$f \upharpoonright x$ is a bijection between $x$ and $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
+
+Let us show that ($f[x]$ is finite and $|f[x]|=k$) for all $x \in P_{\Seq{1}{n},n,k}$.
+$f \upharpoonright x$ is a bijection between $x$ and $f[x]$ for all $x \in P_{\Seq{1}{n},n,k}$.
+Let $x \in P_{\Seq{1}{n},n,k}$.
+Let $g=(f \upharpoonright x)$.\\
+(2) $g$ is a bijection between $x$ and $g[x]$.\\
+$x \subseteq \Seq{1}{n}$.
+$x$ is finite.
+$g[x]$ is finite.
+$x \sim g[x]$ (by 2).
+Qed.
+
+$F(x)=f[x]$ for all  $x \in P_{\Seq{1}{n},n,k}$.
+$F(x)$ is finite for all  $x \in P_{\Seq{1}{n},n,k}$.
+$|F(x)| = k$ for all  $x \in P_{\Seq{1}{n},n,k}$.
+$f[x] \subseteq X$ for all  $x \in P_{\Seq{1}{n},n,k}$.
+$F(x) \subseteq X$ for all $x \in P_{\Seq{1}{n},n,k}$.
+
+Let us show that $F$ is a map from $P_{\Seq{1}{n},n,k}$ to $P_{X,n,k}$.
+$\dom(F) = P_{\Seq{1}{n},n,k}$.
+Let us show that $F[P_{\Seq{1}{n},n,k}] \subseteq P_{X,n,k}$.
+Let $x \in P_{\Seq{1}{n},n,k}$.
+Let $x' = F(x)$.
+$x' \subseteq X$.
+$x'$ is finite.
+$|x'|=k$.
+$P_{X,n,k} = \{y | y$ is finite set such that $y \subseteq X$ and $|y| = k\}$ (by subsets of specific cardinality 2).
+$x' \in P_{X,n,k}$.
+Qed.
+
+Qed.
+
+$P_{X,n,k}$ is nonempty.
+
+
+
+
+Let us show that $F$ is a surjection from $P_{\Seq{1}{n},n,k}$ onto $P_{X,n,k}$.
+
+Let $x \in P_{X,n,k}$.
+$P_{X,n,k} = \{y | y$ is finite set such that $y \subseteq X$ and $|y| = k\}$ (by subsets of specific cardinality 2).
+$x \subseteq X$.
+$f$ is a bijection between $\Seq{1}{n}$ and $X$.
+
+Then $\inv{f}$ is a bijection between $X$ and $\Seq{1}{n}$.
+$\inv{f} \upharpoonright x$ is injective.
+$(\inv{f} \upharpoonright x)[x]  \subseteq (\inv{f} \upharpoonright x)[x]$.
+$\inv{f} \upharpoonright x$ is a surjection from $x$ onto $(\inv{f} \upharpoonright x)[x]$.
+$\inv{f}[x] = (\inv{f} \upharpoonright x)[x]$.
+$\inv{f} \upharpoonright x$ is bijection between $x$ and $\inv{f}[x]$.
+$|x| = k$.
+
+Let us show that $|(\inv{f}[x])| = |x|$.
+For all finite sets $a,b$ if $a$ and $b$ are equinumerous then $|a|=|b|$.
+Therefore $\inv{f}[x] \subseteq \Seq{1}{n}$.
+$\inv{f}[x]$ is a finite set.
+$x$ is a finite set.
+$((\inv{f} \upharpoonright x)[x]) = \inv{f}[x]$.
+$((\inv{f} \upharpoonright x)[x])$ is finite.
+$(\inv{f}[x]) \sim x$.
+$(\inv{f}[x])$ and $x$ are equinumerous.
+Qed.
+
+Therefore $|(\inv{f}[x])|=k$.
+$\inv{f}[x]$ is a finite set.
+$\inv{f}[x] \subseteq \Seq{1}{n}$.
+$\Seq{1}{n}$ is a finite set such that $|\Seq{1}{n}|=n$.
+$P_{\Seq{1}{n},n,k} = \{y|y$ is finite set such that $y \subseteq \Seq{1}{n}$ and $|y| = k\}$(by subsets of specific cardinality 2).
+$(\inv{f}[x]) \in P_{\Seq{1}{n},n,k}$.
+$f[(\inv{f}[x])] = x$.
+$F(\inv{f}[x]) = x$.
+
+Qed.
+
+Let us show that $F$ is injective.
+$P_{\Seq{1}{n},n,k}$ is nonempty.
+Let $x,y \in P_{\Seq{1}{n},n,k}$.
+Assume $F(x) = F(y)$.
+
+Let us show that $x = y$.
+$f[x] = f[y]$.
+$f$ is a bijection between $\Seq{1}{n}$ and $X$.
+$\inv{f}$  is a bijection between $X$ and $\Seq{1}{n}$.
+$f$ is injective.
+$(\inv{f}[f[x]]) = (\inv{f}[f[y]])$.
+For all maps $h$ and all $a\in\dom(h)$ if $h$ is a bijection between $\dom(h)$ and $\range(h)$ then $\inv{h}(h(a))=a$.
+
+Let us show that $\inv{f}[f[y]]=y$.
+Let $y' \in y$.
+For all maps $h$ and all $a\in\dom(h)$ if $h$ is a bijection between $\dom(h)$ and $\range(h)$ then $\inv{h}(h(a))=a$.
+$f$ is a bijection between $\dom(f)$ and $\range(f)$.
+$y' \in \dom(f)$.
+$\inv{f}(f(y')) = y'$.
+Qed.
+
+Let us show that $\inv{f}[f[x]]=x$.
+Let $x' \in x$.
+For all maps $h$ and all $a\in\dom(h)$ if $h$ is a bijection between $\dom(h)$ and $\range(h)$ then $\inv{h}(h(a))=a$.
+$f$ is a bijection between $\dom(f)$ and $\range(f)$.
+$x' \in \dom(f)$.
+$\inv{f}(f(x')) = x'$.
+Qed.
+
+Qed.
+Qed.
+
+$F$ is a bijection between $P_{\Seq{1}{n},n,k}$ and $P_{X,n,k}$.
+
+Let us show that $P_{X,n,k}$ and $P_{\Seq{1}{n},n,k}$ are finite and $|P_{X,n,k}|=|P_{\Seq{1}{n},n,k}|$.
+For all finite sets $a,b$ if $a$ and $b$ are equinumerous then $|a|=|b|$.
+$P_{X,n,k} \subseteq \pow(X)$.
+$P_{X,n,k}$ is a finite set.
+$P_{\Seq{1}{n},n,k}$ is a finite set.
+$P_{\Seq{1}{n},n,k} \sim P_{X,n,k}$.
+$P_{\Seq{1}{n},n,k}$ and $P_{X,n,k}$ are equinumerous.
+Qed.
+
+Qed.
+Qed.
+\end{proof}
+
+\begin{theorem}
+Let $n,k$ be natural number.
+Let $X$ be a finite set such that $|X|=n$.
+Then $P_{X,n,k}$ is finite and $|P_{X,n,k}|=\binom{n}{k}$.
+\end{theorem}
+\begin{proof}
+Case $k \leq n$.
+$|P_{X,n,k}|=|P_{n,k}|$.
+End.
+
+Case not $k \leq n$.
+Thus $k > n$.
+Then $P_{X,n,k} = \emptyset$.
+$\binom{n}{k}=0$.
+Therefore $|P_{X,n,k}| = |\emptyset| = 0 = \binom{n}{k}$.
+End.
+\end{proof}
+
+
+\end{forthel}
+
+
+
 \begin{thebibliography}{plain}
 
 \bibitem{Isabelle} The Isabelle Proof Assistant. \url{https://isabelle.in.tum.de/}
 
 \bibitem{Knaster}
-B. Knaster. Un théorème sur les fonctions d'ensembles. With A. Tarski. 
+5B. Knaster. Un théorème sur les fonctions d'ensembles. With A. Tarski. 
 \textit{Ann. Soc. Polon. Math.} 6: 133–134, 1928.
 
 \bibitem{Naproche} The Naproche Natural Proof Checker. \url{https://naproche.github.io/}
